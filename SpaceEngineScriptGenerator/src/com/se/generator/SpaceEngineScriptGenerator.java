@@ -7,6 +7,7 @@ import com.se.generator.service.ScriptGeneratorService;
  * objects like dwarf moons, asteroids, and moons in a format compatible with
  * SpaceEngine.
  * 
+ * @author Ahmed Ghannam
  * @version 1.0 (January 2025)
  * 
  */
