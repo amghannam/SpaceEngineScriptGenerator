@@ -37,9 +37,9 @@ public class ScriptGeneratorService {
 			}
 
 			// Common mandatory user inputs for all generation:
-			String parentBody = inputHandler.promptString("- Enter the parent body name: ");
-			String distanceUnit = inputHandler.promptDistanceUnit();
-			String referencePlane = inputHandler.promptReferencePlane();
+			var parentBody = inputHandler.promptString("- Enter the parent body name: ");
+			var distanceUnit = inputHandler.promptDistanceUnit();
+			var referencePlane = inputHandler.promptReferencePlane();
 
 			switch ((int) choice) {
 			case 1 -> {
