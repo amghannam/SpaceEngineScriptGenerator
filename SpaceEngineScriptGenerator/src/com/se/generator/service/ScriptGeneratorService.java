@@ -16,7 +16,7 @@ import com.se.generator.utils.Validator;
  */
 public class ScriptGeneratorService {
 
-	private final InputReader inputHandler = new InputReader();
+	private final InputReader inputReader = new InputReader();
 
 	/**
 	 * Runs the script generation workflow by prompting the user for input.
@@ -30,16 +30,16 @@ public class ScriptGeneratorService {
 			System.out.println("4. Comet Cloud");
 			System.out.println("0. Exit");
 
-			double choice = inputHandler.promptDouble("- Enter your choice: ");
+			double choice = inputReader.promptDouble("- Enter your choice: ");
 			if (choice == 0) {
 				System.out.println("Exiting...");
 				return;
 			}
 
 			// Common mandatory user inputs for all generation:
-			var parentBody = inputHandler.promptString("- Enter the parent body name: ");
-			var distanceUnit = inputHandler.promptDistanceUnit();
-			var referencePlane = inputHandler.promptReferencePlane();
+			var parentBody = inputReader.promptString("- Enter the parent body name: ");
+			var distanceUnit = inputReader.promptDistanceUnit();
+			var referencePlane = inputReader.promptReferencePlane();
 
 			switch ((int) choice) {
 			case 1 -> {
@@ -67,7 +67,7 @@ public class ScriptGeneratorService {
 	 * Handles generating regular (major) moons.
 	 */
 	private void handleMoonGeneration(String parentBody, String distanceUnit, String referencePlane) {
-		int count = (int) inputHandler.promptDouble("- Enter the number of Regular Moons: ");
+		int count = (int) inputReader.promptDouble("- Enter the number of Regular Moons: ");
 
 		var names = new ArrayList<String>(count);
 		var radii = new ArrayList<Double>(count);
@@ -76,22 +76,22 @@ public class ScriptGeneratorService {
 
 		for (int i = 0; i < count; i++) {
 			System.out.printf("\n--- Moon %d ---\n", i + 1);
-			names.add(inputHandler.promptString("- Moon name: "));
-			radii.add(inputHandler.promptDouble("- Radius (km): "));
-			distances.add(inputHandler.promptDouble("- Orbital distance (" + distanceUnit + "): "));
-			classes.add(inputHandler.promptMoonClass());
+			names.add(inputReader.promptString("- Moon name: "));
+			radii.add(inputReader.promptDouble("- Radius (km): "));
+			distances.add(inputReader.promptDouble("- Orbital distance (" + distanceUnit + "): "));
+			classes.add(inputReader.promptMoonClass());
 		}
 
-		double minEcc = inputHandler.promptDouble("- Min eccentricity (0-1): ");
-		double maxEcc = inputHandler.promptDouble("- Max eccentricity (0-1): ");
+		double minEcc = inputReader.promptDouble("- Min eccentricity (0-1): ");
+		double maxEcc = inputReader.promptDouble("- Max eccentricity (0-1): ");
 		Validator.validateRange(minEcc, maxEcc, "eccentricity");
 
-		double minInc = inputHandler.promptDouble("- Min inclination (deg): ");
-		double maxInc = inputHandler.promptDouble("- Max inclination (deg): ");
+		double minInc = inputReader.promptDouble("- Min inclination (deg): ");
+		double maxInc = inputReader.promptDouble("- Max inclination (deg): ");
 		Validator.validateRange(minInc, maxInc, "inclination");
 
-		double minBond = inputHandler.promptDouble("- Min Bond albedo (0-1): ");
-		double maxBond = inputHandler.promptDouble("- Max Bond albedo (0-1): ");
+		double minBond = inputReader.promptDouble("- Min Bond albedo (0-1): ");
+		double maxBond = inputReader.promptDouble("- Max Bond albedo (0-1): ");
 		Validator.validateRange(minBond, maxBond, "Bond albedo");
 
 		var fileName = parentBody + "_Moons.sc";
@@ -121,19 +121,19 @@ public class ScriptGeneratorService {
 	 */
 	private void handleGenericObjectGeneration(ObjectType objectType, String parentBody, String distanceUnit,
 			String referencePlane) {
-		double minAxis = inputHandler.promptDouble("- Min semi-major axis: ");
-		double maxAxis = inputHandler.promptDouble("- Max semi-major axis: ");
+		double minAxis = inputReader.promptDouble("- Min semi-major axis: ");
+		double maxAxis = inputReader.promptDouble("- Max semi-major axis: ");
 		Validator.validateRange(minAxis, maxAxis, "semi-major axis");
 
-		double minEcc = inputHandler.promptDouble("- Min eccentricity (0-1): ");
-		double maxEcc = inputHandler.promptDouble("- Max eccentricity (0-1): ");
+		double minEcc = inputReader.promptDouble("- Min eccentricity (0-1): ");
+		double maxEcc = inputReader.promptDouble("- Max eccentricity (0-1): ");
 		Validator.validateRange(minEcc, maxEcc, "eccentricity");
 
-		double minInc = inputHandler.promptDouble("- Min inclination (deg): ");
-		double maxInc = inputHandler.promptDouble("- Max inclination (deg): ");
+		double minInc = inputReader.promptDouble("- Min inclination (deg): ");
+		double maxInc = inputReader.promptDouble("- Max inclination (deg): ");
 		Validator.validateRange(minInc, maxInc, "inclination");
 
-		int count = (int) inputHandler.promptDouble("- Number of objects: ");
+		int count = (int) inputReader.promptDouble("- Number of objects: ");
 		var fileName = parentBody + "_" + objectType.getFormattedName() + ".sc";
 
 		var genParams = GenericObjectParams.builder()
@@ -159,11 +159,11 @@ public class ScriptGeneratorService {
 	 * maxAxis, number of barycenters, etc. The rest is randomly generated.
 	 */
 	private void handleCometSystem(String parentBody, String distanceUnit, String referencePlane) {
-		double minAxis = inputHandler.promptDouble("- Enter the minimum barycenter semimajor axis: ");
-		double maxAxis = inputHandler.promptDouble("- Enter the maximum barycenter semimajor axis: ");
+		double minAxis = inputReader.promptDouble("- Enter the minimum barycenter semimajor axis: ");
+		double maxAxis = inputReader.promptDouble("- Enter the maximum barycenter semimajor axis: ");
 		Validator.validateRange(minAxis, maxAxis, "semimajor axis");
 
-		int count = (int) inputHandler.promptDouble("- How many barycenters to generate? ");
+		int count = (int) inputReader.promptDouble("- How many barycenters to generate? ");
 
 		var fileName = parentBody + "_CometCloud.sc";
 
