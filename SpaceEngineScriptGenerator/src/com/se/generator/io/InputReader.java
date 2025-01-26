@@ -10,31 +10,27 @@ public class InputReader {
 	private final Scanner scanner = new Scanner(System.in);
 
 	/**
-	 * Prompts the user for a double value.
-	 *
-	 * @param prompt the message to display
-	 * @return the entered double value
+	 * Prompts the user to select a distance unit and returns that distance unit.
+	 * 
+	 * @return the selected distance unit
 	 */
-	public double promptDouble(String prompt) {
+	public String promptDistanceUnit() {
 		while (true) {
-			try {
-				System.out.print(prompt);
-				return Double.parseDouble(scanner.nextLine().trim());
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid input. Please enter a valid number.");
+			System.out.println("\nDistance unit selection:");
+			System.out.println("1. au");
+			System.out.println("2. km");
+
+			int choice = (int) promptDouble("- Enter your choice (1-2): ");
+			switch (choice) {
+			case 1 -> {
+				return "AU";
+			}
+			case 2 -> {
+				return "km";
+			}
+			default -> System.out.println("Invalid choice. Please select 1 or 2.");
 			}
 		}
-	}
-
-	/**
-	 * Prompts the user for a string value.
-	 *
-	 * @param prompt the message to display
-	 * @return the entered string value
-	 */
-	public String promptString(String prompt) {
-		System.out.print(prompt);
-		return scanner.nextLine().trim();
 	}
 
 	/**
@@ -107,5 +103,33 @@ public class InputReader {
 			default -> System.out.println("Invalid choice. Please select 1, 2, 3, 4, 5, or 6.");
 			}
 		}
+	}
+
+	/**
+	 * Prompts the user for a double value.
+	 *
+	 * @param prompt the message to display
+	 * @return the entered double value
+	 */
+	public double promptDouble(String prompt) {
+		while (true) {
+			try {
+				System.out.print(prompt);
+				return Double.parseDouble(scanner.nextLine().trim());
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input. Please enter a valid number.");
+			}
+		}
+	}
+
+	/**
+	 * Prompts the user for a string value.
+	 *
+	 * @param prompt the message to display
+	 * @return the entered string value
+	 */
+	public String promptString(String prompt) {
+		System.out.print(prompt);
+		return scanner.nextLine().trim();
 	}
 }

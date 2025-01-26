@@ -149,8 +149,9 @@ public final class ScriptGenerator {
 	 *         generated objects.
 	 */
 	private static List<CelestialObject> generateGenericObjects(GenericObjectParams params) {
-		var result = new ArrayList<CelestialObject>(params.count());
-		for (int i = 0; i < params.count(); i++) {
+		int count = params.count();
+		var result = new ArrayList<CelestialObject>(count);
+		for (int i = 0; i < count; i++) {
 			double axis = randomInRange(params.minAxis(), params.maxAxis());
 			double ecc = randomInRange(params.minEcc(), params.maxEcc());
 			double inc = randomInRange(params.minInc(), params.maxInc());

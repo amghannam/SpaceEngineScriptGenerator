@@ -38,7 +38,7 @@ public class ScriptGeneratorService {
 
 			// Common mandatory user inputs for all generation:
 			String parentBody = inputHandler.promptString("- Enter the parent body name: ");
-			String distanceUnit = promptDistanceUnit();
+			String distanceUnit = inputHandler.promptDistanceUnit();
 			String referencePlane = inputHandler.promptReferencePlane();
 
 			switch ((int) choice) {
@@ -59,30 +59,6 @@ public class ScriptGeneratorService {
 				handleCometSystem(parentBody, distanceUnit, referencePlane);
 			}
 			default -> System.out.println("Invalid choice. Please try again.");
-			}
-		}
-	}
-
-	/**
-	 * Prompts the user to select a distance unit and returns that distance unit.
-	 * 
-	 * @return the selected distance unit
-	 */
-	private String promptDistanceUnit() {
-		while (true) {
-			System.out.println("\nDistance unit selection:");
-			System.out.println("1. au");
-			System.out.println("2. km");
-
-			int choice = (int) inputHandler.promptDouble("- Enter your choice (1-2): ");
-			switch (choice) {
-			case 1 -> {
-				return "AU";
-			}
-			case 2 -> {
-				return "km";
-			}
-			default -> System.out.println("Invalid choice. Please select 1 or 2.");
 			}
 		}
 	}
