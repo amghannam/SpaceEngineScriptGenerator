@@ -31,6 +31,7 @@ public final class ScriptGenerator {
 	public static void writeRegularMoons(RegularMoonParams params) {
 		var moons = generateRegularMoons(params);
 		sortBySemiMajorAxis(moons, rm -> rm.getOrbitalElements());
+		
 		ScriptFileWriter.writeToFile(moons, 
 				params.commonParams().distanceUnit(), 
 				params.commonParams().referencePlane(),
@@ -47,10 +48,12 @@ public final class ScriptGenerator {
 	public static void writeGenericObjects(GenericObjectParams params) {
 		var objects = generateGenericObjects(params);
 		sortBySemiMajorAxis(objects, go -> go.getOrbitalElements());
+		
 		assignNamesInSortedOrder(objects, 
 				params.commonParams().parentBody(), 
 				params.objectType(), 
 				params.startNumber());
+		
 		ScriptFileWriter.writeToFile(objects, 
 				params.commonParams().distanceUnit(), 
 				params.commonParams().referencePlane(),
@@ -333,8 +336,8 @@ public final class ScriptGenerator {
     }
 
 	/**
-	 * Renames objects in ascending order of their orbital axis, e.g.
-	 * parentBody.DM1, parentBody.DM2, etc.
+	 * Renames objects in ascending order of their orbital distance, starting with
+	 * the specified start value (e.g. parentBody.D1, parentBody.D2, etc.).
 	 */
 	private static void assignNamesInSortedOrder(List<CelestialObject> objects, String parentBody,
 			ObjectType objectType, int startNumber) {
