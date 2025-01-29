@@ -106,23 +106,6 @@ public class InputReader {
 	}
 
 	/**
-	 * Prompts the user for a double value.
-	 *
-	 * @param prompt the message to display
-	 * @return the entered double value
-	 */
-	public double promptDouble(String prompt) {
-		while (true) {
-			try {
-				System.out.print(prompt);
-				return Double.parseDouble(scanner.nextLine().trim());
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid input. Please enter a valid number.");
-			}
-		}
-	}
-
-	/**
 	 * Prompts the user for a string value.
 	 *
 	 * @param prompt the message to display
@@ -131,5 +114,54 @@ public class InputReader {
 	public String promptString(String prompt) {
 		System.out.print(prompt);
 		return scanner.nextLine().trim();
+	}
+
+	/**
+	 * Prompts the user for a double value.
+	 *
+	 * @param prompt the message to display
+	 * @return the entered double value
+	 */
+	public double promptDouble(String prompt) {
+		return promptNumber(prompt, Double::parseDouble);
+	}
+
+	/**
+	 * Prompts the user for an int value.
+	 *
+	 * @param prompt the message to display
+	 * @return the entered int value
+	 */
+	public int promptInt(String prompt) {
+		return promptNumber(prompt, Integer::parseInt);
+	}
+
+	/**
+	 * Generic method to prompt the user for a numerical value.
+	 *
+	 * @param prompt the message to display
+	 * @param parser the function that converts a string to the desired number type
+	 * @param <T>    the numerical type (Integer, Double, etc.)
+	 * @return the entered numerical value
+	 */
+	private <T extends Number> T promptNumber(String prompt, Parser<T> parser) {
+		while (true) {
+			try {
+				System.out.print(prompt);
+				return parser.parse(scanner.nextLine().trim());
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input. Please enter a valid number.");
+			}
+		}
+	}
+
+	/**
+	 * Functional interface for parsing numbers.
+	 *
+	 * @param <T> the number type
+	 */
+	@FunctionalInterface
+	private interface Parser<T extends Number> {
+		T parse(String input) throws NumberFormatException;
 	}
 }

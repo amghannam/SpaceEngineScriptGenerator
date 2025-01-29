@@ -3,7 +3,8 @@ package com.se.generator.script;
 import java.util.Objects;
 
 /**
- * Encapsulates parameters for generating Dwarf Moons or Asteroids.
+ * Encapsulates parameters for generating Dwarf Moons or Asteroids, collectively
+ * known as Generic Objects.
  */
 public final class GenericObjectParams {
 
@@ -17,6 +18,7 @@ public final class GenericObjectParams {
 	private final double minInc;
 	private final double maxInc;
 	private final int count;
+	private final int startNumber; // First value in sequence (e.g. DwarfMoon.D1, DwarfMoon.D2, etc.)
 
 	private GenericObjectParams(Builder b) {
 		this.commonParams = b.commonParams;
@@ -29,6 +31,7 @@ public final class GenericObjectParams {
 		this.minInc = b.minInc;
 		this.maxInc = b.maxInc;
 		this.count = b.count;
+		this.startNumber = b.startNumber;
 	}
 
 	public static Builder builder() {
@@ -46,6 +49,7 @@ public final class GenericObjectParams {
 		private double minInc;
 		private double maxInc;
 		private int count;
+		private int startNumber;
 
 		private CommonGenerationParams.Builder commonBuilder;
 
@@ -118,6 +122,11 @@ public final class GenericObjectParams {
 			this.count = c;
 			return this;
 		}
+		
+		public Builder startingFrom(int startNumber) {
+			this.startNumber = startNumber;
+			return this;
+		}
 
 		public GenericObjectParams build() {
 			if (Objects.isNull(this.commonParams)) {
@@ -163,5 +172,9 @@ public final class GenericObjectParams {
 
 	public int count() {
 		return count;
+	}
+	
+	public int startNumber() {
+		return startNumber;
 	}
 }

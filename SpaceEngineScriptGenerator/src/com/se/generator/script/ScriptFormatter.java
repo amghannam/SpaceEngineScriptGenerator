@@ -22,10 +22,10 @@ public final class ScriptFormatter {
 	 * @return a string containing the .sc script representation of the object
 	 */
 	public static String format(CelestialObject co, String distanceUnit, String referencePlane) {
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 
 		// 1) Label
-		String objectLabel = determineLabel(co);
+		var objectLabel = determineLabel(co);
 
 		// 2) Header
 		sb.append(String.format("%s \"%s\"\n{\n", objectLabel, co.getName()));
@@ -54,8 +54,8 @@ public final class ScriptFormatter {
 	}
 
 	private static void appendPhysicalBlock(StringBuilder sb, CelestialObject co) {
-		ObjectType type = co.getType();
-		PhysicalProperties props = co.getPhysicalProperties();
+		var type = co.getType();
+		var props = co.getPhysicalProperties();
 
 		// If no physical properties exist, skip
 		if (props == null) {
@@ -69,7 +69,7 @@ public final class ScriptFormatter {
 		}
 
 		// Print classification if not null
-		String objClass = (co.getClassification() == null || co.getClassification().isBlank()) ? "Asteroid"
+		var objClass = (Objects.isNull(co.getClassification()) || co.getClassification().isBlank()) ? "Asteroid"
 				: co.getClassification();
 		sb.append(String.format("    Class\t\"%s\"\n", objClass));
 
@@ -105,7 +105,7 @@ public final class ScriptFormatter {
 
 	private static void appendOrbitBlock(StringBuilder sb, CelestialObject co, String distanceUnit,
 			String referencePlane) {
-		OrbitalElements oe = co.getOrbitalElements();
+		var oe = co.getOrbitalElements();
 		if (oe == null) {
 			// If no orbital elements, skip
 			return;

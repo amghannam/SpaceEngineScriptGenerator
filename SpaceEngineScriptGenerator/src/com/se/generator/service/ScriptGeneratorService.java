@@ -67,7 +67,7 @@ public class ScriptGeneratorService {
 	 * Handles generating regular (major) moons.
 	 */
 	private void handleMoonGeneration(String parentBody, String distanceUnit, String referencePlane) {
-		int count = (int) inputReader.promptDouble("- Enter the number of Regular Moons: ");
+		int count = inputReader.promptInt("- Enter the number of Regular Moons to generate: ");
 
 		var names = new ArrayList<String>(count);
 		var radii = new ArrayList<Double>(count);
@@ -133,7 +133,8 @@ public class ScriptGeneratorService {
 		double maxInc = inputReader.promptDouble("- Max inclination (deg): ");
 		Validator.validateRange(minInc, maxInc, "inclination");
 
-		int count = (int) inputReader.promptDouble("- Number of objects: ");
+		int count = inputReader.promptInt("- Number of objects: ");
+		int startNumber = inputReader.promptInt("- Starting value in generated sequence: ");
 		var fileName = parentBody + "_" + objectType.getFormattedName() + ".sc";
 
 		var genParams = GenericObjectParams.builder()
@@ -148,6 +149,7 @@ public class ScriptGeneratorService {
 				.minInc(minInc)
 				.maxInc(maxInc)
 				.count(count)
+				.startingFrom(startNumber)
 				.outputFile(fileName)
 				.build();
 
@@ -163,7 +165,7 @@ public class ScriptGeneratorService {
 		double maxAxis = inputReader.promptDouble("- Enter the maximum barycenter semimajor axis: ");
 		Validator.validateRange(minAxis, maxAxis, "semimajor axis");
 
-		int count = (int) inputReader.promptDouble("- How many barycenters to generate? ");
+		int count = inputReader.promptInt("- How many barycenters to generate? ");
 
 		var fileName = parentBody + "_CometCloud.sc";
 

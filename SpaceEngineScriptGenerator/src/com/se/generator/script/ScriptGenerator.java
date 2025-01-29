@@ -47,7 +47,10 @@ public final class ScriptGenerator {
 	public static void writeGenericObjects(GenericObjectParams params) {
 		var objects = generateGenericObjects(params);
 		sortBySemiMajorAxis(objects, go -> go.getOrbitalElements());
-		assignNamesInSortedOrder(objects, params.commonParams().parentBody(), params.objectType());
+		assignNamesInSortedOrder(objects, 
+				params.commonParams().parentBody(), 
+				params.objectType(), 
+				params.startNumber());
 		ScriptFileWriter.writeToFile(objects, 
 				params.commonParams().distanceUnit(), 
 				params.commonParams().referencePlane(),
@@ -334,9 +337,9 @@ public final class ScriptGenerator {
 	 * parentBody.DM1, parentBody.DM2, etc.
 	 */
 	private static void assignNamesInSortedOrder(List<CelestialObject> objects, String parentBody,
-			ObjectType objectType) {
+			ObjectType objectType, int startNumber) {
 		for (int i = 0; i < objects.size(); i++) {
-			var finalName = String.format("%s.%s%d", parentBody, objectType.getPrefix(), i + 1);
+			var finalName = String.format("%s.%s%d", parentBody, objectType.getPrefix(), startNumber++);
 			objects.get(i).setName(finalName);
 		}
 	}
