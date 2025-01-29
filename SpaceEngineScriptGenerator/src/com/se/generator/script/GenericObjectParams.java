@@ -13,10 +13,10 @@ public final class GenericObjectParams {
 
 	private final double minAxis;
 	private final double maxAxis;
-	private final double minEcc;
-	private final double maxEcc;
-	private final double minInc;
-	private final double maxInc;
+	private final double minEccentricity;
+	private final double maxEccentricity;
+	private final double minInclination;
+	private final double maxInclination;
 	private final int count;
 	private final int startNumber; // First value in sequence (e.g. DwarfMoon.D1, DwarfMoon.D2, etc.)
 
@@ -26,10 +26,10 @@ public final class GenericObjectParams {
 
 		this.minAxis = b.minAxis;
 		this.maxAxis = b.maxAxis;
-		this.minEcc = b.minEcc;
-		this.maxEcc = b.maxEcc;
-		this.minInc = b.minInc;
-		this.maxInc = b.maxInc;
+		this.minEccentricity = b.minEccentricity;
+		this.maxEccentricity = b.maxEccenctricity;
+		this.minInclination = b.minInclination;
+		this.maxInclination = b.maxInclination;
 		this.count = b.count;
 		this.startNumber = b.startNumber;
 	}
@@ -44,10 +44,10 @@ public final class GenericObjectParams {
 
 		private double minAxis;
 		private double maxAxis;
-		private double minEcc;
-		private double maxEcc;
-		private double minInc;
-		private double maxInc;
+		private double minEccentricity;
+		private double maxEccenctricity;
+		private double minInclination;
+		private double maxInclination;
 		private int count;
 		private int startNumber;
 
@@ -98,23 +98,23 @@ public final class GenericObjectParams {
 			return this;
 		}
 
-		public Builder minEcc(double d) {
-			this.minEcc = d;
+		public Builder minEccentricity(double e) {
+			this.minEccentricity = e;
 			return this;
 		}
 
-		public Builder maxEcc(double d) {
-			this.maxEcc = d;
+		public Builder maxEccentricity(double e) {
+			this.maxEccenctricity = e;
 			return this;
 		}
 
-		public Builder minInc(double d) {
-			this.minInc = d;
+		public Builder minInclination(double i) {
+			this.minInclination = i;
 			return this;
 		}
 
-		public Builder maxInc(double d) {
-			this.maxInc = d;
+		public Builder maxInclination(double i) {
+			this.maxInclination = i;
 			return this;
 		}
 
@@ -122,7 +122,7 @@ public final class GenericObjectParams {
 			this.count = c;
 			return this;
 		}
-		
+
 		public Builder startingFrom(int startNumber) {
 			this.startNumber = startNumber;
 			return this;
@@ -154,26 +154,26 @@ public final class GenericObjectParams {
 		return maxAxis;
 	}
 
-	public double minEcc() {
-		return minEcc;
+	public double minEccentricity() {
+		return minEccentricity;
 	}
 
-	public double maxEcc() {
-		return maxEcc;
+	public double maxEccentricity() {
+		return maxEccentricity;
 	}
 
-	public double minInc() {
-		return minInc;
+	public double minInclination() {
+		return minInclination;
 	}
 
-	public double maxInc() {
-		return maxInc;
+	public double maxInclination() {
+		return maxInclination;
 	}
 
 	public int count() {
 		return count;
 	}
-	
+
 	public int startNumber() {
 		return startNumber;
 	}

@@ -106,33 +106,33 @@ public final class RegularMoonParams {
 			return this;
 		}
 
-		public Builder minEccentricity(double d) {
-			this.minEccentricity = d;
+		public Builder minEccentricity(double e) {
+			this.minEccentricity = e;
 			return this;
 		}
 
-		public Builder maxEccentricity(double d) {
-			this.maxEccentricity = d;
+		public Builder maxEccentricity(double e) {
+			this.maxEccentricity = e;
 			return this;
 		}
 
-		public Builder minInclination(double d) {
-			this.minInclination = d;
+		public Builder minInclination(double i) {
+			this.minInclination = i;
 			return this;
 		}
 
-		public Builder maxInclination(double d) {
-			this.maxInclination = d;
+		public Builder maxInclination(double i) {
+			this.maxInclination = i;
 			return this;
 		}
 
-		public Builder minBondAlbedo(double d) {
-			this.minBondAlbedo = d;
+		public Builder minBondAlbedo(double a) {
+			this.minBondAlbedo = a;
 			return this;
 		}
 
-		public Builder maxBondAlbedo(double d) {
-			this.maxBondAlbedo = d;
+		public Builder maxBondAlbedo(double a) {
+			this.maxBondAlbedo = a;
 			return this;
 		}
 

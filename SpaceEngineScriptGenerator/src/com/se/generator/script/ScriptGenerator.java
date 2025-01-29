@@ -156,8 +156,8 @@ public final class ScriptGenerator {
 		var result = new ArrayList<CelestialObject>(count);
 		for (int i = 0; i < count; i++) {
 			double axis = randomInRange(params.minAxis(), params.maxAxis());
-			double ecc = randomInRange(params.minEcc(), params.maxEcc());
-			double inc = randomInRange(params.minInc(), params.maxInc());
+			double ecc = randomInRange(params.minEccentricity(), params.maxEccentricity());
+			double inc = randomInRange(params.minInclination(), params.maxInclination());
 			double asc = randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE);
 			double arg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
 			double ma = randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY);
