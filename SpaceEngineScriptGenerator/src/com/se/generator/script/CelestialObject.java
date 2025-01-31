@@ -9,7 +9,7 @@ public class CelestialObject {
 	// Identification
 	private ObjectType type;
 	private String name;
-	private String parentBody; 
+	private String parentBody;
 
 	private String classification;
 
@@ -23,8 +23,6 @@ public class CelestialObject {
 
 	/**
 	 * Returns a SpaceEngine-compatible script for this object.
-	 * 
-	 * @return a compatible SpaceEngine script that represents this object
 	 */
 	public String toScript(String distanceUnit, String referencePlane) {
 		return ScriptFormatter.format(this, distanceUnit, referencePlane);
@@ -33,7 +31,7 @@ public class CelestialObject {
 	// -----------------------------------------------------
 	// Getters
 	// -----------------------------------------------------
-	
+
 	public ObjectType getType() {
 		return type;
 	}
@@ -61,7 +59,7 @@ public class CelestialObject {
 	// -----------------------------------------------------
 	// Setters
 	// -----------------------------------------------------
-	
+
 	/**
 	 * Allows renaming after creation (useful when sorting then naming).
 	 */
@@ -69,10 +67,18 @@ public class CelestialObject {
 		this.name = newName;
 	}
 
+	/**
+	 * Allows re-assigning the parent body after creation (useful for child comets
+	 * referencing a newly renamed barycenter).
+	 */
+	public void setParentBody(String newParentBody) {
+		this.parentBody = newParentBody;
+	}
+
 	// -----------------------------------------------------
 	// Builder
 	// -----------------------------------------------------
-	
+
 	public static Builder builder() {
 		return new Builder();
 	}

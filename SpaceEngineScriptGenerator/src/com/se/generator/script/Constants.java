@@ -32,8 +32,8 @@ public final class Constants {
 	public static final double MAX_MEAN_ANOMALY = 360.0;
 
 	// Physical properties
-	public static final double MIN_GENERIC_RADIUS = 0.3;
-	public static final double MAX_GENERIC_RADIUS = 120.0;
+	public static final double MIN_GENERIC_RADIUS = 0.1;
+	public static final double MAX_GENERIC_RADIUS = 60.0;
 	public static final double MIN_ALBEDO = 0.0;
 	public static final double MAX_ALBEDO = 1.0;
 }

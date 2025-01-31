@@ -3,7 +3,6 @@ package com.se.generator.service;
 import java.util.ArrayList;
 
 import com.se.generator.io.InputReader;
-import com.se.generator.script.CometCloudParams;
 import com.se.generator.script.GenericObjectParams;
 import com.se.generator.script.ObjectType;
 import com.se.generator.script.RegularMoonParams;
@@ -27,7 +26,6 @@ public class ScriptGeneratorService {
 			System.out.println("1. Dwarf Moon");
 			System.out.println("2. Asteroid");
 			System.out.println("3. Moon (Regular Moons)");
-			System.out.println("4. Comet Cloud");
 			System.out.println("0. Exit");
 
 			double choice = inputReader.promptDouble("- Enter your choice: ");
@@ -53,10 +51,6 @@ public class ScriptGeneratorService {
 			case 3 -> {
 				// Generate "regular" (major) moons
 				handleMoonGeneration(parentBody, distanceUnit, referencePlane);
-			}
-			case 4 -> {
-				// Generate multiple Barycenters + child comets (aka Comet Cloud)
-				handleCometSystem(parentBody, distanceUnit, referencePlane);
 			}
 			default -> System.out.println("Invalid choice. Please try again.");
 			}
@@ -154,31 +148,5 @@ public class ScriptGeneratorService {
 				.build();
 
 		ScriptGenerator.writeGenericObjects(genParams);
-	}
-
-	/**
-	 * Handles the generation of a "comet cloud". The user only supplies a minAxis,
-	 * maxAxis, number of barycenters, etc. The rest is randomly generated.
-	 */
-	private void handleCometSystem(String parentBody, String distanceUnit, String referencePlane) {
-		double minAxis = inputReader.promptDouble("- Enter the minimum barycenter semimajor axis: ");
-		double maxAxis = inputReader.promptDouble("- Enter the maximum barycenter semimajor axis: ");
-		Validator.validateRange(minAxis, maxAxis, "semimajor axis");
-
-		int count = inputReader.promptInt("- How many barycenters to generate? ");
-
-		var fileName = parentBody + "_CometCloud.sc";
-
-		var cometParams = CometCloudParams.builder()
-				.parentBody(parentBody)
-				.distanceUnit(distanceUnit)
-				.referencePlane(referencePlane)
-				.minAxis(minAxis)
-				.maxAxis(maxAxis)
-				.barycenterCount(count)
-				.outputFile(fileName)
-				.build();
-
-		ScriptGenerator.writeCometSystems(cometParams);
 	}
 }

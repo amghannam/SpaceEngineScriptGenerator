@@ -60,21 +60,6 @@ public final class ScriptGenerator {
 				params.commonParams().outputFile());
 	}
 
-	/**
-	 * Generates barycenters and minimal child comets (a "comet cloud"), writing
-	 * them all to a .sc file. Barycenters and comets are logically grouped and
-	 * combined into a single list, sorted by ascending semi-major axis.
-	 *
-	 * @param params The {@link CometCloudParams} specifying how many barycenters,
-	 *               their orbital ranges, and the output file location
-	 */
-	public static void writeCometSystems(CometCloudParams params) {
-		ScriptFileWriter.writeToFile(generateCometSystems(params), 
-				params.commonParams().distanceUnit(), 
-				params.commonParams().referencePlane(),
-				params.commonParams().outputFile());
-	}
-
 	/*
 	 * -------------------------------------------------------------------------
 	 * Private Helpers
@@ -200,142 +185,6 @@ public final class ScriptGenerator {
 	}
 
 	/**
-	 * Generates a list of celestial objects (barycenters and comets) based on the
-	 * provided parameters.
-	 *
-	 * @param params the parameters for generating comet systems
-	 * @return a list of celestial objects ready to be written to the .sc file
-	 */
-	private static List<CelestialObject> generateCometSystems(CometCloudParams params) {
-		var groups = new ArrayList<BarycenterGroup>();
-
-		// 1. Generate barycenters with temporary names and their comets
-		for (int i = 1; i <= params.barycenterCount(); i++) {
-			var tempBaryName = String.format("%s.TempC%d", params.commonParams().parentBody(), i);
-			var barycenter = createBarycenter(tempBaryName, params);
-			var comets = createChildComets(tempBaryName);
-			groups.add(new BarycenterGroup(barycenter, comets));
-		}
-
-		// 2. Sort the groups based on the barycenters' semi-major axes (ascending
-		// order)
-		sortBySemiMajorAxis(groups, group -> group.barycenter().getOrbitalElements());
-
-		// 3. Assign final names after sorting
-		assignFinalNames(groups, params.commonParams().parentBody());
-
-		// 4. Flatten the list: barycenter followed by its comets
-		var finalList = new ArrayList<CelestialObject>();
-		for (BarycenterGroup group : groups) {
-			finalList.add(group.barycenter());
-			finalList.addAll(group.comets());
-		}
-
-		return finalList;
-	}
-
-	/**
-	 * Creates a barycenter with a temporary name.
-	 *
-	 * @param baryName the temporary name for the barycenter
-	 * @param params   the parameters for generating the barycenter
-	 * @return a {@link CelestialObject} representing the barycenter
-	 */
-	private static CelestialObject createBarycenter(String baryName, CometCloudParams params) {
-		double sma = randomInRange(params.minAxis(), params.maxAxis());
-		double ecc = randomInRange(0.6, 0.95);
-		double inc = randomInRange(100, 160);
-		double asc = randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE);
-		double arg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
-		double ma = randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY);
-
-        var pPropsBary = PhysicalProperties.builder()
-        		.build(); // Minimal physical properties
-        
-        var oElemsBary = OrbitalElements.builder()
-                .epoch(Constants.DEFAULT_EPOCH)
-                .semiMajorAxis(sma)
-                .eccentricity(ecc)
-                .inclination(inc)
-                .ascendingNode(asc)
-                .argOfPeriapsis(arg)
-                .meanAnomaly(ma)
-                .build();
-
-        return CelestialObject.builder()
-                .type(ObjectType.BARYCENTER)
-                .name(baryName) // Temporary name
-                .parentBody(params.commonParams().parentBody())
-                .physicalProperties(pPropsBary)
-                .orbitalElements(oElemsBary)
-                .build();
-    }
-
-	/**
-	 * Creates child comets with temporary names associated with a given barycenter.
-	 *
-	 * @param baryName the temporary name of the parent barycenter
-	 * @return a list of {@link CelestialObject} representing the comets
-	 */
-	private static List<CelestialObject> createChildComets(String baryName) {
-		var comets = new ArrayList<CelestialObject>();
-
-		// Create Comet A
-		var cometA = buildComet(baryName, "A");
-		comets.add(cometA);
-
-		// Create Comet B
-		var cometB = buildComet(baryName, "B");
-		comets.add(cometB);
-
-		return comets;
-	}
-
-	/**
-	 * Builds a comet with a temporary name.
-	 *
-	 * @param baryName the temporary name of the parent barycenter
-	 * @param suffix   the suffix for the comet ("A" or "B")
-	 * @return a {@link CelestialObject} representing the comet
-	 */
-	private static CelestialObject buildComet(String baryName, String suffix) {
-		double sma = randomInRange(0.0005, 0.01);
-		double ecc = randomInRange(Constants.MIN_ECCENTRICITY, Constants.MAX_ECCENTRICITY);
-		double inc = randomInRange(Constants.MIN_INCLINATION, Constants.MAX_INCLINATION);
-		double asc = randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE);
-		double arg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
-		double mean = randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY);
-
-        var pPropsComet = PhysicalProperties.builder()
-                .mass(randomInRange(1.0e-11, 1.0e-9))
-                .radius(randomInRange(2.0, 15.0))
-                .rotationPeriod(randomInRange(1.0, 12.0))
-                .build();
-
-        var oElemsComet = OrbitalElements.builder()
-                .epoch(Constants.DEFAULT_EPOCH)
-                .semiMajorAxis(sma)
-                .eccentricity(ecc)
-                .inclination(inc)
-                .ascendingNode(asc)
-                .argOfPeriapsis(arg)
-                .meanAnomaly(mean)
-                .build();
-
-        // Temporary name; will be updated later
-        var tempCometName = String.format("%s.Temp%s", baryName, suffix);
-
-        return CelestialObject.builder()
-                .type(ObjectType.COMET)
-                .name(tempCometName) // Temporary name
-                .parentBody(baryName)
-                .classification("Asteroid")
-                .physicalProperties(pPropsComet)
-                .orbitalElements(oElemsComet)
-                .build();
-    }
-
-	/**
 	 * Renames objects in ascending order of their orbital distance, starting with
 	 * the specified start value (e.g. parentBody.D1, parentBody.D2, etc.).
 	 */
@@ -344,31 +193,6 @@ public final class ScriptGenerator {
 		for (int i = 0; i < objects.size(); i++) {
 			var finalName = String.format("%s.%s%d", parentBody, objectType.getPrefix(), startNumber++);
 			objects.get(i).setName(finalName);
-		}
-	}
-
-	/**
-	 * Assigns sequential names to barycenters and their associated comets based on
-	 * sorted order.
-	 *
-	 * @param groups     the list of sorted {@link BarycenterGroup}
-	 * @param parentBody the name of the parent body (e.g., "Euthymia")
-	 */
-	private static void assignFinalNames(List<BarycenterGroup> groups, String parentBody) {
-		for (int i = 0; i < groups.size(); i++) {
-			int baryIndex = i + 1;
-			var group = groups.get(i);
-
-			// Assign final name to barycenter (e.g., "Euthymia.C1")
-			var finalBaryName = String.format("%s.C%d", parentBody, baryIndex);
-			group.barycenter().setName(finalBaryName);
-
-			// Assign names to comets (e.g., "Euthymia.C1 A", "Euthymia.C1 B")
-			for (int j = 0; j < group.comets().size(); j++) {
-				var cometSuffix = (j == 0) ? "A" : "B";
-				var finalCometName = String.format("%s %s", finalBaryName, cometSuffix);
-				group.comets().get(j).setName(finalCometName);
-			}
 		}
 	}
 
@@ -391,12 +215,5 @@ public final class ScriptGenerator {
 	 */
 	private static double randomInRange(double min, double max) {
 		return min + (max - min) * RNG.nextDouble();
-	}
-	
-	/**
-	 * A record to group a barycenter with its associated comets. Records are
-	 * immutable and provide a concise syntax for data carriers.
-	 */
-	private static record BarycenterGroup(CelestialObject barycenter, List<CelestialObject> comets) {
 	}
 }

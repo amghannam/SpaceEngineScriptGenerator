@@ -18,17 +18,7 @@ public enum ObjectType {
 	/**
 	 * Represents an asteroid object.
 	 */
-	ASTEROID("Asteroid", "A"),
-
-	/**
-	 * Represents a barycenter for a comet system, e.g. "Barycenter 'Euthymia.C1'"
-	 */
-	BARYCENTER("Barycenter", "C"),
-
-	/**
-	 * Represents an actual comet body, e.g. "Comet 'Euthymia.C1 A'"
-	 */
-	COMET("Comet", "C");
+	ASTEROID("Asteroid", "A");
 
 	private final String formattedName;
 	private final String prefix;

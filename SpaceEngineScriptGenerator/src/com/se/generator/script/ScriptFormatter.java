@@ -44,12 +44,6 @@ public final class ScriptFormatter {
 	/* -------------------- Private Helpers below -------------------- */
 
 	private static String determineLabel(CelestialObject co) {
-		if (co.getType() == ObjectType.BARYCENTER) {
-			return "Barycenter";
-		} else if (co.getType() == ObjectType.COMET) {
-			return "Comet";
-		}
-		// fallback for MOON, DWARF_MOON, ASTEROID, etc.
 		return Objects.nonNull(co.getType()) ? co.getType().getFormattedName() : "Object";
 	}
 
@@ -62,19 +56,13 @@ public final class ScriptFormatter {
 			return;
 		}
 
-		// Barycenter typically doesn't list radius or mass
-		if (type == ObjectType.BARYCENTER) {
-			// No physical block for barycenter
-			return;
-		}
-
 		// Print classification if not null
 		var objClass = (Objects.isNull(co.getClassification()) || co.getClassification().isBlank()) ? "Asteroid"
 				: co.getClassification();
 		sb.append(String.format("    Class\t\"%s\"\n", objClass));
 
 		// Print mass for comets or asteroids if available
-		if (type == ObjectType.COMET || type == ObjectType.ASTEROID || type == ObjectType.DWARF_MOON) {
+		if (type == ObjectType.ASTEROID || type == ObjectType.DWARF_MOON) {
 			if (props.mass() > 0) {
 				sb.append(String.format("    Mass\t%e\n", props.mass()));
 			}
@@ -115,16 +103,11 @@ public final class ScriptFormatter {
 		sb.append("    {\n");
 		sb.append(String.format("        Epoch           %.8f\n", oe.epoch()));
 
-		// If object is a comet with a known orbital period:
-		if (co.getType() == ObjectType.COMET && oe.period() > 0) {
-			sb.append(String.format("        Period          %.8f\n", oe.period()));
+		// Otherwise, output semi-major axis
+		if ("km".equalsIgnoreCase(distanceUnit)) {
+			sb.append(String.format("        SemiMajorAxisKm %.8f\n", oe.semiMajorAxis()));
 		} else {
-			// Otherwise, output semi-major axis
-			if ("km".equalsIgnoreCase(distanceUnit)) {
-				sb.append(String.format("        SemiMajorAxisKm %.8f\n", oe.semiMajorAxis()));
-			} else {
-				sb.append(String.format("        SemiMajorAxis   %.8f\n", oe.semiMajorAxis()));
-			}
+			sb.append(String.format("        SemiMajorAxis   %.8f\n", oe.semiMajorAxis()));
 		}
 
 		sb.append(String.format("        Eccentricity    %.16f\n", oe.eccentricity()));

@@ -13,7 +13,7 @@ import com.se.generator.service.ScriptGeneratorService;
  */
 public class SpaceEngineScriptGenerator {
 	public static void main(String[] args) {
-		System.out.println("Welcome! Use this tool to generate comets, astereoids or moons for SpaceEngine.\n");
+		System.out.println("Welcome! Use this tool to generate astereoids or moons for SpaceEngine.\n");
 		new ScriptGeneratorService().run();
 	}
 }
