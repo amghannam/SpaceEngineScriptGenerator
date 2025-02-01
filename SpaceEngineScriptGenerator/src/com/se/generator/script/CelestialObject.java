@@ -94,7 +94,6 @@ public class CelestialObject {
 	 *
 	 * @param newName the new name to assign to the object
 	 */
-
 	public void setName(String newName) {
 		this.name = newName;
 	}
