@@ -3,6 +3,8 @@ package com.se.generator.service;
 import java.util.ArrayList;
 
 import com.se.generator.io.InputReader;
+import com.se.generator.script.CometGenerationParams;
+import com.se.generator.script.CommonGenerationParams;
 import com.se.generator.script.GenericObjectParams;
 import com.se.generator.script.ObjectType;
 import com.se.generator.script.RegularMoonParams;
@@ -22,10 +24,11 @@ public class ScriptGeneratorService {
 	 */
 	public void run() {
 		while (true) {
-			System.out.println("\nSelect what you'd like to generate:");
+			System.out.println("\nSelect the type of object you'd like to generate:");
 			System.out.println("1. Dwarf Moon");
 			System.out.println("2. Asteroid");
 			System.out.println("3. Moon (Regular Moons)");
+			System.out.println("4. Comet Cloud");
 			System.out.println("0. Exit");
 
 			double choice = inputReader.promptDouble("- Enter your choice: ");
@@ -52,14 +55,14 @@ public class ScriptGeneratorService {
 				// Generate "regular" (major) moons
 				handleMoonGeneration(parentBody, distanceUnit, referencePlane);
 			}
+			case 4 -> {
+				handleCometGeneration(parentBody, distanceUnit, referencePlane);
+			}
 			default -> System.out.println("Invalid choice. Please try again.");
 			}
 		}
 	}
 
-	/**
-	 * Handles generating regular (major) moons.
-	 */
 	private void handleMoonGeneration(String parentBody, String distanceUnit, String referencePlane) {
 		int count = inputReader.promptInt("- Enter the number of Regular Moons to generate: ");
 
@@ -110,9 +113,6 @@ public class ScriptGeneratorService {
 		ScriptGenerator.writeRegularMoons(moonParams);
 	}
 
-	/**
-	 * Handles generating Dwarf Moons or Asteroids with random orbital parameters.
-	 */
 	private void handleGenericObjectGeneration(ObjectType objectType, String parentBody, String distanceUnit,
 			String referencePlane) {
 		double minAxis = inputReader.promptDouble("- Min semi-major axis: ");
@@ -148,5 +148,30 @@ public class ScriptGeneratorService {
 				.build();
 
 		ScriptGenerator.writeGenericObjects(genParams);
+	}
+	
+    private void handleCometGeneration(String parentBody, String distanceUnit, String referencePlane) {
+		double minAxis = inputReader.promptDouble("- Min semi-major axis: ");
+		double maxAxis = inputReader.promptDouble("- Max semi-major axis: ");
+		int baseCount = inputReader.promptInt("- Base number of objects to generate: ");
+		Validator.validateRange(minAxis, maxAxis, "semi-major axis");
+
+		var outputFile = parentBody + "_CometCloud.sc";
+		var common = CommonGenerationParams.builder()
+				.parentBody(parentBody)
+				.distanceUnit(distanceUnit)
+				.referencePlane(referencePlane)
+				.outputFile(outputFile)
+				.build();
+
+		// Build comet–specific parameters
+		var cometParams = CometGenerationParams.builder()
+				.commonParams(common)
+				.minAxis(minAxis)
+				.maxAxis(maxAxis)
+				.count(baseCount)
+				.build();
+
+		ScriptGenerator.writeComets(cometParams);
 	}
 }

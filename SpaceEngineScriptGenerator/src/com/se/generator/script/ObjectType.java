@@ -6,19 +6,29 @@ package com.se.generator.script;
  */
 public enum ObjectType {
 	/**
-	 * Represents a major moon (round object). 
+	 * Represents a major moon (round object).
 	 */
-	MOON("Moon", "M"), 
-	
+	MOON("Moon", "M"),
+
 	/**
 	 * Represents a minor moon.
 	 */
 	DWARF_MOON("DwarfMoon", "D"),
-	
+
 	/**
 	 * Represents an asteroid object.
 	 */
-	ASTEROID("Asteroid", "A");
+	ASTEROID("Asteroid", "A"),
+
+	/**
+	 * Represents a single comet object.
+	 */
+	COMET("Comet", "C"),
+
+	/**
+	 * Represents a barycenter group for comets.
+	 */
+	BARYCENTER("Barycenter", "C");
 
 	private final String formattedName;
 	private final String prefix;

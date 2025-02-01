@@ -19,7 +19,7 @@ public final class ScriptFileWriter {
 	}
 
 	/**
-	 * Writes the provided list of {@link CelestialObject} objects to the specified
+	 * Writes the provided list of {@code CelestialObject} objects to the specified
 	 * output file.
 	 *
 	 * <p>

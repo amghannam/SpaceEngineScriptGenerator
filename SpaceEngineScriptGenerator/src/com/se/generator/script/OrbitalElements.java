@@ -1,7 +1,30 @@
 package com.se.generator.script;
 
 /**
- * Represents the orbital parameters for a given object.
+ * Represents the basic orbital parameters for a celestial object.
+ * <p>
+ * This class encapsulates the key elements that describe an orbit:
+ * <ul>
+ * <li>{@code epoch} - The reference time (usually given as a Julian Date) at
+ * which these orbital elements are defined.</li>
+ * <li>{@code semiMajorAxis} - The semi-major axis of the orbit, which defines
+ * the size of the orbit.</li>
+ * <li>{@code eccentricity} - A dimensionless value that describes the shape of
+ * the orbit (0 for a circular orbit, between 0 and 1 for elliptical
+ * orbits).</li>
+ * <li>{@code inclination} - The tilt of the orbit in degrees relative to the
+ * reference plane.</li>
+ * <li>{@code ascendingNode} - The longitude of the ascending node (in degrees),
+ * indicating where the orbit passes upward through the reference plane.</li>
+ * <li>{@code argOfPericenter} - The argument of pericenter (in degrees), which
+ * specifies the angle from the ascending node to the point of closest
+ * approach.</li>
+ * <li>{@code meanAnomaly} - The mean anomaly (in degrees) at the epoch,
+ * representing the fraction of the orbital period that has elapsed since
+ * pericenter passage.</li>
+ * <li>{@code period} - The orbital period, the time required to complete one
+ * full orbit.</li>
+ * </ul>
  */
 public final class OrbitalElements {
 	private final double epoch;
@@ -9,7 +32,7 @@ public final class OrbitalElements {
 	private final double eccentricity;
 	private final double inclination;
 	private final double ascendingNode;
-	private final double argOfPeriapsis;
+	private final double argOfPericenter;
 	private final double meanAnomaly;
 	private final double period;
 
@@ -19,7 +42,7 @@ public final class OrbitalElements {
 		this.eccentricity = builder.eccentricity;
 		this.inclination = builder.inclination;
 		this.ascendingNode = builder.ascendingNode;
-		this.argOfPeriapsis = builder.argOfPeriapsis;
+		this.argOfPericenter = builder.argOfPericenter;
 		this.meanAnomaly = builder.meanAnomaly;
 		this.period = builder.period;
 	}
@@ -34,7 +57,7 @@ public final class OrbitalElements {
 		private double eccentricity;
 		private double inclination;
 		private double ascendingNode;
-		private double argOfPeriapsis;
+		private double argOfPericenter;
 		private double meanAnomaly;
 		private double period;
 
@@ -63,8 +86,8 @@ public final class OrbitalElements {
 			return this;
 		}
 
-		public Builder argOfPeriapsis(double arg) {
-			this.argOfPeriapsis = arg;
+		public Builder argOfPericenter(double arg) {
+			this.argOfPericenter = arg;
 			return this;
 		}
 
@@ -104,8 +127,8 @@ public final class OrbitalElements {
 		return ascendingNode;
 	}
 
-	public double argOfPeriapsis() {
-		return argOfPeriapsis;
+	public double argOfPericenter() {
+		return argOfPericenter;
 	}
 
 	public double meanAnomaly() {

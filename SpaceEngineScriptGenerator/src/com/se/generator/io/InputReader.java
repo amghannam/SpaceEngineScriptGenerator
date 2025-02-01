@@ -3,7 +3,7 @@ package com.se.generator.io;
 import java.util.Scanner;
 
 /**
- * Special class that handles user input with validation and prompting.
+ * Special class that handles user input prompting.
  */
 public class InputReader {
 

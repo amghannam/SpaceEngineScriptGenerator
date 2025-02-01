@@ -1,8 +1,16 @@
 package com.se.generator.script;
 
 /**
- * Represents a celestial object (Moon, DwarfMoon, Asteroid, etc.), with fields
- * for physical and orbital properties.
+ * Represents a celestial object (such as a Moon, DwarfMoon, Asteroid, or Comet)
+ * with identification, physical properties, and orbital elements.
+ * <p>
+ * The object's type, name, parent body, and classification are used for
+ * identification. The physical properties (mass, radius, albedos, rotation
+ * period) and the orbital elements (epoch, semi‐major axis, eccentricity,
+ * inclination, ascending node, argument of pericenter, mean anomaly, period)
+ * describe its physical state and orbit. The {@code satellite} flag indicates
+ * whether this object is a satellite (for example, a child comet belonging to a
+ * barycenter group).
  */
 public class CelestialObject {
 
@@ -10,19 +18,33 @@ public class CelestialObject {
 	private ObjectType type;
 	private String name;
 	private String parentBody;
-
 	private String classification;
 
 	// Physical and orbital properties (by composition)
 	private PhysicalProperties physicalProperties;
 	private OrbitalElements orbitalElements;
 
+	// Indicates if this object is a satellite (e.g. a child comet in a
+	// barycenter group)
+	private boolean satellite;
+
 	private CelestialObject() {
 		// Prevent instantiation
 	}
 
 	/**
-	 * Returns a SpaceEngine-compatible script for this object.
+	 * Returns a SpaceEngine–compatible script representation of this celestial
+	 * object.
+	 * <p>
+	 * The output script includes the object's identification, a physical block
+	 * (with selective output depending on the object type), and an orbit block. The
+	 * formatting is adjusted based on the provided distance unit and reference
+	 * plane.
+	 *
+	 * @param distanceUnit   the unit for distances (for example, "km" or "AU")
+	 * @param referencePlane the reference plane for the orbital elements (for
+	 *                       example, "Equator")
+	 * @return a formatted script string representing this celestial object
 	 */
 	public String toScript(String distanceUnit, String referencePlane) {
 		return ScriptFormatter.format(this, distanceUnit, referencePlane);
@@ -56,23 +78,47 @@ public class CelestialObject {
 		return orbitalElements;
 	}
 
+	public boolean isSatellite() {
+		return satellite;
+	}
+
 	// -----------------------------------------------------
 	// Setters
 	// -----------------------------------------------------
 
 	/**
-	 * Allows renaming after creation (useful when sorting then naming).
+	 * Sets a new name for this celestial object.
+	 * <p>
+	 * This method is useful for renaming objects after creation (for example, after
+	 * sorting).
+	 *
+	 * @param newName the new name to assign to the object
 	 */
+
 	public void setName(String newName) {
 		this.name = newName;
 	}
 
 	/**
-	 * Allows re-assigning the parent body after creation (useful for child comets
-	 * referencing a newly renamed barycenter).
+	 * Sets a new parent body for this celestial object.
+	 * <p>
+	 * This is useful for reassigning the parent body—for instance, when updating a
+	 * child comet’s parent after a barycenter is renamed.
+	 *
+	 * @param newParentBody the new parent body name
 	 */
 	public void setParentBody(String newParentBody) {
 		this.parentBody = newParentBody;
+	}
+
+	/**
+	 * Sets whether this celestial object is considered a satellite.
+	 *
+	 * @param satellite {@code true} to mark the object as a satellite;
+	 *                  {@code false} otherwise
+	 */
+	public void setSatellite(boolean satellite) {
+		this.satellite = satellite;
 	}
 
 	// -----------------------------------------------------
@@ -117,6 +163,11 @@ public class CelestialObject {
 
 		public Builder orbitalElements(OrbitalElements oe) {
 			co.orbitalElements = oe;
+			return this;
+		}
+
+		public Builder satellite(boolean satellite) {
+			co.satellite = satellite;
 			return this;
 		}
 

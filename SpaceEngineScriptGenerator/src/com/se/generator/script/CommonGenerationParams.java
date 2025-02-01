@@ -1,7 +1,13 @@
 package com.se.generator.script;
 
 /**
- * Represents baseline object parameters.
+ * Represents the baseline object parameters used in script generation.
+ * <p>
+ * This class encapsulates common settings that are shared across generated
+ * objects, including the name of the parent body, the unit of distance (e.g.,
+ * "km" or "AU"), the reference plane (e.g., "Equator"), and the output file
+ * name where the script will be written. It is designed to be built using the
+ * builder pattern.
  */
 public final class CommonGenerationParams {
 	private final String parentBody;

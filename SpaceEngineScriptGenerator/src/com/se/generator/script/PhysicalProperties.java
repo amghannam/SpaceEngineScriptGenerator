@@ -1,7 +1,19 @@
 package com.se.generator.script;
 
 /**
- * Represents the physical properties for a given object.
+ * Represents the basic physical properties of a celestial object.
+ * <p>
+ * This class encapsulates key physical attributes:
+ * <ul>
+ * <li>{@code mass} - The mass of the object (e.g., in kilograms).</li>
+ * <li>{@code radius} - The radius of the object (e.g., in kilometers).</li>
+ * <li>{@code albedoBond} - The Bond albedo, representing the total fraction of
+ * incident light that is scattered in all directions.</li>
+ * <li>{@code albedoGeom} - The geometric albedo, indicating the object's
+ * brightness as observed directly from above.</li>
+ * <li>{@code rotationPeriod} - The time it takes for the object to complete one
+ * full rotation (e.g., in hours).</li>
+ * </ul>
  */
 public final class PhysicalProperties {
 	private final double mass;
@@ -9,7 +21,6 @@ public final class PhysicalProperties {
 	private final double albedoBond; // Bond albedo
 	private final double albedoGeom; // Geometric albedo
 	private final double rotationPeriod;
-	private final double obliquity;
 
 	private PhysicalProperties(Builder builder) {
 		this.mass = builder.mass;
@@ -17,7 +28,6 @@ public final class PhysicalProperties {
 		this.albedoBond = builder.albedoBond;
 		this.albedoGeom = builder.albedoGeom;
 		this.rotationPeriod = builder.rotationPeriod;
-		this.obliquity = builder.obliquity;
 	}
 
 	public static Builder builder() {
@@ -30,7 +40,6 @@ public final class PhysicalProperties {
 		private double albedoBond;
 		private double albedoGeom;
 		private double rotationPeriod;
-		private double obliquity;
 
 		public Builder mass(double m) {
 			this.mass = m;
@@ -54,11 +63,6 @@ public final class PhysicalProperties {
 
 		public Builder rotationPeriod(double rp) {
 			this.rotationPeriod = rp;
-			return this;
-		}
-
-		public Builder obliquity(double ob) {
-			this.obliquity = ob;
 			return this;
 		}
 
@@ -86,9 +90,5 @@ public final class PhysicalProperties {
 
 	public double rotationPeriod() {
 		return rotationPeriod;
-	}
-
-	public double obliquity() {
-		return obliquity;
 	}
 }
