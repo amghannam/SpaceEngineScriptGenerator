@@ -101,7 +101,7 @@ public final class ScriptGenerator {
 	public static void writeComets(CometGenerationParams params) {
 		var common = params.commonParams();
 		int baseCount = params.count();
-		var objects = new ArrayList<CelestialObject>(baseCount);
+		var objects = new ArrayList<CelestialObject>(estimateTotalObjects(baseCount));
 
 		// Compute the number of comet groups as a random 10–20% of the base
 		// count, but ensure that at least one group is generated.
@@ -109,21 +109,8 @@ public final class ScriptGenerator {
 		int singles = baseCount - groups;
 		int seq = params.startingFrom();
 
-		// Generate grouped comets (each group: one barycenter plus exactly two
-		// satellites)
-		for (int i = 0; i < groups; i++) {
-			var groupName = common.parentBody() + ".C" + seq++;
-			objects.add(createBarycenter(common, params, groupName));
-			double baseArg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
-			double argOffset = randomInRange(15, 25);
-			objects.add(createCometSatellite(params, groupName, " A", baseArg));
-			objects.add(createCometSatellite(params, groupName, " B", (baseArg + argOffset) % 360));
-		}
-
-		// Generate single comets (each with its own unique name)
-		for (int i = 0; i < singles; i++) {
-			objects.add(createSingleComet(common, params, common.parentBody() + ".C" + seq++));
-		}
+		seq = addGroupedComets(objects, common, params, seq, groups);
+		seq = addSingleComets(objects, common, params, seq, singles);
 
 		ScriptFileWriter.writeToFile(objects, 
 				common.distanceUnit(), 
@@ -235,7 +222,35 @@ public final class ScriptGenerator {
 	}
 	
 	// Comet generation logic methods
+	
+	private static int addGroupedComets(List<CelestialObject> objects, 
+			CommonGenerationParams common,
+			CometGenerationParams params, 
+			int seq, 
+			int groups) {
+		for (int i = 0; i < groups; i++) {
+			var groupName = common.parentBody() + ".C" + seq++;
+			objects.add(createBarycenter(common, params, groupName));
+			double baseArg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
+			double argOffset = randomInRange(15, 25);
+			objects.add(createCometSatellite(params, groupName, " A", baseArg));
+			objects.add(createCometSatellite(params, groupName, " B", (baseArg + argOffset) % 360));
+		}
+		return seq;
+	}
 
+	private static int addSingleComets(List<CelestialObject> objects, 
+			CommonGenerationParams common,
+			CometGenerationParams params, 
+			int seq, 
+			int singles) {
+		for (int i = 0; i < singles; i++) {
+			var name = common.parentBody() + ".C" + seq++;
+			objects.add(createSingleComet(common, params, name));
+		}
+		return seq;
+	}
+	
 	private static CelestialObject createBarycenter(CommonGenerationParams common, 
 			CometGenerationParams params,
 			String groupName) {
@@ -343,5 +358,29 @@ public final class ScriptGenerator {
 	 */
 	private static double randomInRange(double min, double max) {
 		return min + (max - min) * RNG.nextDouble();
+	}
+
+	/**
+	 * Computes the approximate worst-case initial capacity for the list of comet
+	 * objects to be generated.
+	 * <p>
+	 * Given the user-specified base count (the number of comet entries requested),
+	 * a random grouping mechanism designates a certain percentage (between 10% and
+	 * 20%) of that count to form comet groups. Each group produces one barycenter
+	 * plus two satellite comets, effectively adding two extra objects per group.
+	 * This method uses a worst-case assumption of 20% grouping (rounded down, with
+	 * at least 1 group) to ensure the {@code ArrayList} is created with sufficient
+	 * initial capacity.
+	 * <p>
+	 * The total capacity is calculated as: <blockquote>baseCount + 2 * Math.max(1,
+	 * floor(baseCount * 0.2))</blockquote>
+	 *
+	 * @param baseCount the base number of comet entries requested by the user
+	 * @return the computed total capacity to be used as the initial capacity for
+	 *         the list of generated objects
+	 */
+	private static int estimateTotalObjects(int baseCount) {
+		int worstCaseGroups = Math.max(1, (int) Math.floor(baseCount * 0.2));
+		return baseCount + 2 * worstCaseGroups;
 	}
 }
