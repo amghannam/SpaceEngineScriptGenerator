@@ -36,5 +36,5 @@ replay_pid*
 Thumbs.db
 
 # SpaceEngine 
-.sc
+*.sc
 
