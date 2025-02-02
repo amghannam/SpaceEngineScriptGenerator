@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public final class GenericObjectParams {
 
-	private final CommonGenerationParams commonParams;
+	private final CommonParams commonParams;
 	private final ObjectType objectType;
 
 	private final double minAxis;
@@ -39,7 +39,7 @@ public final class GenericObjectParams {
 	}
 
 	public static final class Builder {
-		private CommonGenerationParams commonParams;
+		private CommonParams commonParams;
 		private ObjectType objectType;
 
 		private double minAxis;
@@ -51,11 +51,11 @@ public final class GenericObjectParams {
 		private int count;
 		private int startNumber;
 
-		private CommonGenerationParams.Builder commonBuilder;
+		private CommonParams.Builder commonBuilder;
 
-		private CommonGenerationParams.Builder ensureCommonBuilder() {
+		private CommonParams.Builder ensureCommonBuilder() {
 			if (Objects.isNull(commonBuilder)) {
-				commonBuilder = CommonGenerationParams.builder();
+				commonBuilder = CommonParams.builder();
 			}
 
 			return commonBuilder;
@@ -138,7 +138,7 @@ public final class GenericObjectParams {
 	}
 
 	// Getters
-	public CommonGenerationParams commonParams() {
+	public CommonParams commonParams() {
 		return commonParams;
 	}
 

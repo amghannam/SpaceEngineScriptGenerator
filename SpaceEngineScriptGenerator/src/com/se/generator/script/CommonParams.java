@@ -9,13 +9,13 @@ package com.se.generator.script;
  * name where the script will be written. It is designed to be built using the
  * builder pattern.
  */
-public final class CommonGenerationParams {
+public final class CommonParams {
 	private final String parentBody;
 	private final String distanceUnit;
 	private final String referencePlane;
 	private final String outputFile;
 
-	private CommonGenerationParams(Builder builder) {
+	private CommonParams(Builder builder) {
 		this.parentBody = builder.parentBody;
 		this.distanceUnit = builder.distanceUnit;
 		this.referencePlane = builder.referencePlane;
@@ -52,8 +52,8 @@ public final class CommonGenerationParams {
 			return this;
 		}
 
-		public CommonGenerationParams build() {
-			return new CommonGenerationParams(this);
+		public CommonParams build() {
+			return new CommonParams(this);
 		}
 	}
 

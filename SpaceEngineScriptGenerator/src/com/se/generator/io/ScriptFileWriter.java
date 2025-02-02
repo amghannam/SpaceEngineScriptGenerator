@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import com.se.generator.script.CelestialObject;
+import com.se.generator.script.CommonParams;
 
 /**
  * Static helper class for writing generated SpaceEngine scripts to .sc files as
@@ -19,31 +20,23 @@ public final class ScriptFileWriter {
 	}
 
 	/**
-	 * Writes the provided list of {@code CelestialObject} objects to the specified
-	 * output file.
-	 *
+	 * Writes the supplied list of {@code CelestialObject} objects to an output
+	 * file, as defined in the specified {@code CommonParams} instance.
 	 * <p>
-	 * The file will be written in SpaceEngine's .sc format, with options to specify
-	 * distance units and reference planes.
-	 * </p>
+	 * The resulting file will be in SpaceEngine's canonical .sc format.
 	 *
-	 * @param objects        the list of celestial objects to write to the file
-	 * @param distanceUnit   the unit of distance to use in the script (e.g., AU,
-	 *                       km)
-	 * @param referencePlane the reference plane for celestial objects (e.g.,
-	 *                       ecliptic)
-	 * @param fileName       the name of the output file
+	 * @param objects the list of generated objects to write to a file
+	 * @param params  the common generation parameters shared by the objects in the
+	 *                specified list
 	 */
-	public static void writeToFile(List<CelestialObject> objects, 
-			String distanceUnit, 
-			String referencePlane,
-			String fileName) {
-		try (BufferedWriter writer = Files.newBufferedWriter(Path.of(fileName))) {
+	public static void writeToFile(List<CelestialObject> objects, CommonParams params) {
+		try (BufferedWriter writer = Files.newBufferedWriter(Path.of(params.outputFile()))) {
 			for (var co : objects) {
-				writer.write(co.toScript(distanceUnit, referencePlane));
+				writer.write(co.toScript(params.distanceUnit(), params.referencePlane()));
 				writer.newLine();
 			}
-			System.out.println("Script generation complete. Wrote " + objects.size() + " objects to file: " + fileName);
+			System.out.println("Script generation complete. Wrote " + objects.size() 
+								+ " objects to file: " + params.outputFile());
 		} catch (IOException e) {
 			System.err.println("Error writing file: " + e.getMessage());
 		}

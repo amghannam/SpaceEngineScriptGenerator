@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public final class RegularMoonParams {
 
-	private final CommonGenerationParams commonParams;
+	private final CommonParams commonParams;
 
 	private final List<String> names;
 	private final List<Double> radii;
@@ -41,8 +41,8 @@ public final class RegularMoonParams {
 	}
 
 	public static final class Builder {
-		private CommonGenerationParams.Builder commonBuilder;
-		private CommonGenerationParams commonParams;
+		private CommonParams.Builder commonBuilder;
+		private CommonParams commonParams;
 
 		private List<String> names;
 		private List<Double> radii;
@@ -56,9 +56,9 @@ public final class RegularMoonParams {
 		private double minBondAlbedo;
 		private double maxBondAlbedo;
 
-		private CommonGenerationParams.Builder ensureCommonBuilder() {
+		private CommonParams.Builder ensureCommonBuilder() {
 			if (Objects.isNull(commonBuilder)) {
-				commonBuilder = CommonGenerationParams.builder();
+				commonBuilder = CommonParams.builder();
 			}
 
 			return commonBuilder;
@@ -146,7 +146,7 @@ public final class RegularMoonParams {
 	}
 
 	// Getters
-	public CommonGenerationParams commonParams() {
+	public CommonParams commonParams() {
 		return commonParams;
 	}
 

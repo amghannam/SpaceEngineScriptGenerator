@@ -42,12 +42,8 @@ public final class ScriptGenerator {
 	 */
 	public static void writeRegularMoons(RegularMoonParams params) {
 		var moons = generateRegularMoons(params);
-		sortBySemiMajorAxis(moons, rm -> rm.getOrbitalElements());
-		
-		ScriptFileWriter.writeToFile(moons, 
-				params.commonParams().distanceUnit(), 
-				params.commonParams().referencePlane(),
-				params.commonParams().outputFile());
+		sortBySemiMajorAxis(moons, rm -> rm.getOrbitalElements());	
+		ScriptFileWriter.writeToFile(moons, params.commonParams());
 	}
 
 	/**
@@ -71,18 +67,15 @@ public final class ScriptGenerator {
 				params.objectType(), 
 				params.startNumber());
 		
-		ScriptFileWriter.writeToFile(objects, 
-				params.commonParams().distanceUnit(), 
-				params.commonParams().referencePlane(),
-				params.commonParams().outputFile());
+		ScriptFileWriter.writeToFile(objects, params.commonParams());
 	}
 
 	/**
 	 * Generates a SpaceEngine-compatible script for a set of comets based on the
 	 * given parameters.
 	 * <p>
-	 * The comet generation process uses the provided {@code CometGenerationParams}
-	 * (which wraps a {@code CommonGenerationParams} instance along with
+	 * The comet generation process uses the provided {@code CometParams}
+	 * (which wraps a {@code CommonParams} instance along with
 	 * comet-specific parameters) to determine the common values (such as parent
 	 * body, distance unit, and reference plane) and the comet-specific values (the
 	 * minimum and maximum semi-major axis, total count, and starting sequence
@@ -95,11 +88,11 @@ public final class ScriptGenerator {
 	 * physical parameters (such as period, mass, and obliquity) are omitted. The
 	 * complete script is then written to a file via {@code ScriptFileWriter}.
 	 *
-	 * @param params a {@code CometGenerationParams} object containing the necessary
+	 * @param params a {@code CometParams} object containing the necessary
 	 *               parameters for generating the comet script
 	 */
-	public static void writeComets(CometGenerationParams params) {
-		var common = params.commonParams();
+	public static void writeComets(CometParams params) {
+		var commonParams = params.commonParams();
 		int baseCount = params.count();
 		var objects = new ArrayList<CelestialObject>(estimateTotalObjects(baseCount));
 
@@ -109,13 +102,10 @@ public final class ScriptGenerator {
 		int singles = baseCount - groups;
 		int seq = params.startingFrom();
 
-		seq = addGroupedComets(objects, common, params, seq, groups);
-		seq = addSingleComets(objects, common, params, seq, singles);
+		seq = addGroupedComets(objects, commonParams, params, seq, groups);
+		seq = addSingleComets(objects, commonParams, params, seq, singles);
 
-		ScriptFileWriter.writeToFile(objects, 
-				common.distanceUnit(), 
-				common.referencePlane(), 
-				common.outputFile());
+		ScriptFileWriter.writeToFile(objects, commonParams);
 	}
 
 	/*
@@ -224,8 +214,8 @@ public final class ScriptGenerator {
 	// Comet generation logic methods
 	
 	private static int addGroupedComets(List<CelestialObject> objects, 
-			CommonGenerationParams common,
-			CometGenerationParams params, 
+			CommonParams common,
+			CometParams params, 
 			int seq, 
 			int groups) {
 		for (int i = 0; i < groups; i++) {
@@ -240,8 +230,8 @@ public final class ScriptGenerator {
 	}
 
 	private static int addSingleComets(List<CelestialObject> objects, 
-			CommonGenerationParams common,
-			CometGenerationParams params, 
+			CommonParams common,
+			CometParams params, 
 			int seq, 
 			int singles) {
 		for (int i = 0; i < singles; i++) {
@@ -251,8 +241,8 @@ public final class ScriptGenerator {
 		return seq;
 	}
 	
-	private static CelestialObject createBarycenter(CommonGenerationParams common, 
-			CometGenerationParams params,
+	private static CelestialObject createBarycenter(CommonParams common, 
+			CometParams params,
 			String groupName) {
 		var orbit = generateOrbit(params.minAxis(), params.maxAxis());
 		return CelestialObject.builder()
@@ -263,7 +253,7 @@ public final class ScriptGenerator {
 				.build();
 	}
 
-	private static CelestialObject createCometSatellite(CometGenerationParams params, 
+	private static CelestialObject createCometSatellite(CometParams params, 
 			String groupName, String suffix,
 			double argOfPeriapsis) {
 		var baseOrbit = generateOrbit(params.minAxis(), params.maxAxis());
@@ -293,8 +283,8 @@ public final class ScriptGenerator {
 				.build();
 	}
 
-	private static CelestialObject createSingleComet(CommonGenerationParams common, 
-			CometGenerationParams params,
+	private static CelestialObject createSingleComet(CommonParams common, 
+			CometParams params,
 			String name) {
 		var oElems = generateOrbit(params.minAxis(), params.maxAxis());
 		

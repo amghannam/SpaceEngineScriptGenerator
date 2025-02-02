@@ -4,14 +4,14 @@ package com.se.generator.script;
  * Contains comet–specific parameters in addition to common generation
  * parameters.
  */
-public final class CometGenerationParams {
-	private final CommonGenerationParams commonParams;
+public final class CometParams {
+	private final CommonParams commonParams;
 	private final double minAxis;
 	private final double maxAxis;
 	private final int count;
 	private final int startingFrom;
 
-	private CometGenerationParams(Builder builder) {
+	private CometParams(Builder builder) {
 		this.commonParams = builder.commonParams;
 		this.minAxis = builder.minAxis;
 		this.maxAxis = builder.maxAxis;
@@ -23,7 +23,7 @@ public final class CometGenerationParams {
 		return new Builder();
 	}
 
-	public CommonGenerationParams commonParams() {
+	public CommonParams commonParams() {
 		return commonParams;
 	}
 
@@ -44,13 +44,13 @@ public final class CometGenerationParams {
 	}
 
 	public static final class Builder {
-		private CommonGenerationParams commonParams;
+		private CommonParams commonParams;
 		private double minAxis;
 		private double maxAxis;
 		private int count;
 		private int startingFrom = 1; // Default sequence start
 
-		public Builder commonParams(CommonGenerationParams commonParams) {
+		public Builder commonParams(CommonParams commonParams) {
 			this.commonParams = commonParams;
 			return this;
 		}
@@ -75,8 +75,8 @@ public final class CometGenerationParams {
 			return this;
 		}
 
-		public CometGenerationParams build() {
-			return new CometGenerationParams(this);
+		public CometParams build() {
+			return new CometParams(this);
 		}
 	}
 }

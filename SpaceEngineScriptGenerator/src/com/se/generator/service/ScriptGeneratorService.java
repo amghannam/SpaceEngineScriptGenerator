@@ -3,8 +3,8 @@ package com.se.generator.service;
 import java.util.ArrayList;
 
 import com.se.generator.io.InputReader;
-import com.se.generator.script.CometGenerationParams;
-import com.se.generator.script.CommonGenerationParams;
+import com.se.generator.script.CometParams;
+import com.se.generator.script.CommonParams;
 import com.se.generator.script.GenericObjectParams;
 import com.se.generator.script.ObjectType;
 import com.se.generator.script.RegularMoonParams;
@@ -157,7 +157,7 @@ public class ScriptGeneratorService {
 		Validator.validateRange(minAxis, maxAxis, "semi-major axis");
 
 		var outputFile = parentBody + "_CometCloud.sc";
-		var common = CommonGenerationParams.builder()
+		var common = CommonParams.builder()
 				.parentBody(parentBody)
 				.distanceUnit(distanceUnit)
 				.referencePlane(referencePlane)
@@ -165,7 +165,7 @@ public class ScriptGeneratorService {
 				.build();
 
 		// Build comet–specific parameters
-		var cometParams = CometGenerationParams.builder()
+		var cometParams = CometParams.builder()
 				.commonParams(common)
 				.minAxis(minAxis)
 				.maxAxis(maxAxis)
