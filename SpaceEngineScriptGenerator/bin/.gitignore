@@ -1,27 +1,5 @@
-# Eclipse metadata
-.settings/
-.project
-.classpath
-
-# Build output directories
+# Ignore everything in bin/
 bin/
-target/
-com/
 
-# Compiled class files
-*.class
-
-# JAR, WAR, EAR files
-*.jar
-*.war
-*.ear
-
-# Temporary files created by Eclipse or the OS
-*.tmp
-*.bak
-*.swp
-.DS_Store
-Thumbs.db
-
-# SpaceEngine
-.sc
+# But track bin/.gitignore
+!bin/.gitignore
