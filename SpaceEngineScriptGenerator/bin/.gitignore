@@ -1,5 +1,1 @@
-# Ignore everything in bin/
-bin/
-
-# But track bin/.gitignore
-!bin/.gitignore
+/com/

@@ -1,6 +1,5 @@
 package com.se.generator.io;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,13 +29,14 @@ public final class ScriptFileWriter {
 	 *                specified list
 	 */
 	public static void writeToFile(List<CelestialObject> objects, CommonParams params) {
-		try (BufferedWriter writer = Files.newBufferedWriter(Path.of(params.outputFile()))) {
+		var fileName = params.outputFile();
+		try (var writer = Files.newBufferedWriter(Path.of(fileName))) {
 			for (var co : objects) {
 				writer.write(co.toScript(params.distanceUnit(), params.referencePlane()));
 				writer.newLine();
 			}
 			System.out.println("Script generation complete. Wrote " + objects.size() 
-								+ " objects to file: " + params.outputFile());
+								+ " objects to file: " + fileName);
 		} catch (IOException e) {
 			System.err.println("Error writing file: " + e.getMessage());
 		}
