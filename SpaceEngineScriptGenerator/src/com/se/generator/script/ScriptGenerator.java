@@ -3,6 +3,7 @@ package com.se.generator.script;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
@@ -39,10 +40,11 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code RegularMoonParams} instance containing all necessary
 	 *               parameters for creating regular moons
+	 * @throws NullPointerException if {@code params} is {@code null}
 	 */
 	public static void writeRegularMoons(RegularMoonParams params) {
-		var moons = generateRegularMoons(params);
-		sortBySemiMajorAxis(moons, rm -> rm.getOrbitalElements());	
+		var moons = generateRegularMoons(Objects.requireNonNull(params));
+		sortBySemiMajorAxis(moons, rm -> rm.getOrbitalElements());
 		ScriptFileWriter.writeToFile(moons, params.commonParams());
 	}
 
@@ -57,9 +59,10 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code GenericObjectParams} instance controlling the object
 	 *               count, orbital ranges, and the output file
+	 * @throws NullPointerException if {@code params} is {@code null}
 	 */
 	public static void writeGenericObjects(GenericObjectParams params) {
-		var objects = generateGenericObjects(params);
+		var objects = generateGenericObjects(Objects.requireNonNull(params));
 		sortBySemiMajorAxis(objects, go -> go.getOrbitalElements());
 		
 		assignNamesInSortedOrder(objects, 
@@ -74,12 +77,11 @@ public final class ScriptGenerator {
 	 * Generates a SpaceEngine-compatible script for a set of comets based on the
 	 * given parameters.
 	 * <p>
-	 * The comet generation process uses the provided {@code CometParams}
-	 * (which wraps a {@code CommonParams} instance along with
-	 * comet-specific parameters) to determine the common values (such as parent
-	 * body, distance unit, and reference plane) and the comet-specific values (the
-	 * minimum and maximum semi-major axis, total count, and starting sequence
-	 * number).
+	 * The comet generation process uses the provided {@code CometParams} (which
+	 * wraps a {@code CommonParams} instance along with comet-specific parameters)
+	 * to determine the common values (such as parent body, distance unit, and
+	 * reference plane) and the comet-specific values (the minimum and maximum
+	 * semi-major axis, total count, and starting sequence number).
 	 * <p>
 	 * A random percentage between 10% and 20% of the total comet count is used to
 	 * form groups. Each group produces a barycenter with two associated comet
@@ -90,9 +92,10 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code CometParams} object containing the necessary
 	 *               parameters for generating the comet script
+	 * @throws NullPointerException if {@code params} is {@code null}
 	 */
 	public static void writeComets(CometParams params) {
-		var commonParams = params.commonParams();
+		var commonParams = Objects.requireNonNull(params).commonParams();
 		int baseCount = params.count();
 		var objects = new ArrayList<CelestialObject>(estimateTotalObjects(baseCount));
 

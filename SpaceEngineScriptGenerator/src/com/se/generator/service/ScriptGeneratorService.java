@@ -24,7 +24,7 @@ public class ScriptGeneratorService {
 	 */
 	public void run() {
 		while (true) {
-			System.out.println("\nSelect the type of object you'd like to generate:");
+			System.out.println("\n- Select the type of object you'd like to generate:");
 			System.out.println("1. Dwarf Moon");
 			System.out.println("2. Asteroid");
 			System.out.println("3. Moon (Regular Moons)");
@@ -56,6 +56,7 @@ public class ScriptGeneratorService {
 				handleMoonGeneration(parentBody, distanceUnit, referencePlane);
 			}
 			case 4 -> {
+				// Generate Comets (+Comet Groups)
 				handleCometGeneration(parentBody, distanceUnit, referencePlane);
 			}
 			default -> System.out.println("Invalid choice. Please try again.");
@@ -65,12 +66,11 @@ public class ScriptGeneratorService {
 
 	private void handleMoonGeneration(String parentBody, String distanceUnit, String referencePlane) {
 		int count = inputReader.promptInt("- Enter the number of Regular Moons to generate: ");
-
+		
 		var names = new ArrayList<String>(count);
 		var radii = new ArrayList<Double>(count);
 		var distances = new ArrayList<Double>(count);
 		var classes = new ArrayList<String>(count);
-
 		for (int i = 0; i < count; i++) {
 			System.out.printf("\n--- Moon %d ---\n", i + 1);
 			names.add(inputReader.promptString("- Moon name: "));
