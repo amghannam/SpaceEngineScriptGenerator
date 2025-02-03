@@ -6,8 +6,7 @@ package com.se.generator.script;
  * This class encapsulates common settings that are shared across generated
  * objects, including the name of the parent body, the unit of distance (e.g.,
  * "km" or "AU"), the reference plane (e.g., "Equator"), and the output file
- * name where the script will be written. It is designed to be built using the
- * builder pattern.
+ * name where the script will be written.
  */
 public final class CommonParams {
 	private final String parentBody;
