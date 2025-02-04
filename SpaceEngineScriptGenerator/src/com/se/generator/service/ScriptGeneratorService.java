@@ -316,13 +316,13 @@ public class ScriptGeneratorService {
 	 */
 	private double[] promptValidatedRange(String fieldName, String promptMin, String promptMax) {
 		if ("inclination".equalsIgnoreCase(fieldName)) {
-			return promptRange(fieldName, 
+			return promptAndValidateRange(fieldName, 
 					promptMin, 
 					promptMax, 
 					INCLINATION_RANGE_PREDICATE,
 					ERROR_INCLINATION_RANGE_TEMPLATE);
 		}
-		return promptRange(fieldName, 
+		return promptAndValidateRange(fieldName, 
 				promptMin, 
 				promptMax, 
 				DEFAULT_RANGE_PREDICATE, 
@@ -339,7 +339,7 @@ public class ScriptGeneratorService {
 	 * @return an array of two doubles where index 0 is min and index 1 is max
 	 */
 	private double[] promptFractionRange(String fieldName, String promptMin, String promptMax) {
-		return promptRange(fieldName, 
+		return promptAndValidateRange(fieldName, 
 				promptMin, 
 				promptMax, 
 				FRACTION_RANGE_PREDICATE, 
@@ -358,7 +358,7 @@ public class ScriptGeneratorService {
 	 *                      <b>fieldName</b>, <b>min</b>, and <b>max</b>
 	 * @return an array of two doubles where index 0 is min and index 1 is max
 	 */
-	private double[] promptRange(String fieldName, 
+	private double[] promptAndValidateRange(String fieldName, 
 			String promptMin, 
 			String promptMax, 
 			Predicate<double[]> predicate,
