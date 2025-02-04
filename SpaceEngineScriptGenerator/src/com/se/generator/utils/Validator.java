@@ -30,7 +30,7 @@ import java.util.function.Predicate;
  */
 public final class Validator {
 
-	private static final String DEFAULT_MESSAGE = "Error: The input value does not satisfy the indicated condition.";
+	private static final String DEFAULT_MESSAGE = "The input value does not satisfy the indicated condition.";
 
 	private Validator() {
 		// Prevent instantiation
