@@ -27,7 +27,7 @@ public final class ScriptFileWriter {
 	 * and will be overwritten if it already exists. Each celestial object in the
 	 * supplied list is written as a separate line by invoking its {@code toScript}
 	 * method with the distance unit and reference plane obtained from the provided
-	 * {@code params}.
+	 * <b>params</b>.
 	 * <p>
 	 * Note that if an I/O error occurs during writing, the error is logged to
 	 * {@code System.err} and the exception is not propagated.

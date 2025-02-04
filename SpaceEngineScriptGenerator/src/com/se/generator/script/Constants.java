@@ -22,8 +22,8 @@ public final class Constants {
 	// Angles in degrees
 	public static final double MIN_ECCENTRICITY = 0.0;
 	public static final double MAX_ECCENTRICITY = 1.0;
-	public static final double MIN_INCLINATION = -180.0;
-	public static final double MAX_INCLINATION = 180.0;
+	public static final double MIN_INCLINATION = 0.0;
+	public static final double MAX_INCLINATION = 360.0;
 	public static final double MIN_ASCENDING_NODE = 0.0;
 	public static final double MAX_ASCENDING_NODE = 360.0;
 	public static final double MIN_ARG_OF_PERICEN = 0.0;

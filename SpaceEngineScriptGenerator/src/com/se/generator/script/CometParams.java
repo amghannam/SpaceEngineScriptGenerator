@@ -45,13 +45,37 @@ public final class CometParams {
 
 	public static final class Builder {
 		private CommonParams commonParams;
+		private CommonParams.Builder commonBuilder;
 		private double minAxis;
 		private double maxAxis;
 		private int count;
 		private int startingFrom = 1; // Default sequence start
 
-		public Builder commonParams(CommonParams commonParams) {
-			this.commonParams = commonParams;
+		private CommonParams.Builder ensureCommonBuilder() {
+			if (commonBuilder == null) {
+				commonBuilder = CommonParams.builder();
+			}
+			return commonBuilder;
+		}
+
+		// Convenience methods for setting common parameters
+		public Builder parentBody(String s) {
+			ensureCommonBuilder().parentBody(s);
+			return this;
+		}
+
+		public Builder distanceUnit(String s) {
+			ensureCommonBuilder().distanceUnit(s);
+			return this;
+		}
+
+		public Builder referencePlane(String s) {
+			ensureCommonBuilder().referencePlane(s);
+			return this;
+		}
+
+		public Builder outputFile(String s) {
+			ensureCommonBuilder().outputFile(s);
 			return this;
 		}
 
@@ -76,6 +100,9 @@ public final class CometParams {
 		}
 
 		public CometParams build() {
+			if (commonParams == null) {
+				commonParams = ensureCommonBuilder().build();
+			}
 			return new CometParams(this);
 		}
 	}

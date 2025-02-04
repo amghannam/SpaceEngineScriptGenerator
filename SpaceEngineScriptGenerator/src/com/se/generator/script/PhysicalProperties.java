@@ -11,8 +11,6 @@ package com.se.generator.script;
  * incident light that is scattered in all directions.</li>
  * <li>{@code albedoGeom} - The geometric albedo, indicating the object's
  * brightness as observed directly from above.</li>
- * <li>{@code rotationPeriod} - The time it takes for the object to complete one
- * full rotation (e.g., in hours).</li>
  * </ul>
  */
 public final class PhysicalProperties {
@@ -20,14 +18,12 @@ public final class PhysicalProperties {
 	private final double radius;
 	private final double albedoBond; // Bond albedo
 	private final double albedoGeom; // Geometric albedo
-	private final double rotationPeriod;
 
 	private PhysicalProperties(Builder builder) {
 		this.mass = builder.mass;
 		this.radius = builder.radius;
 		this.albedoBond = builder.albedoBond;
 		this.albedoGeom = builder.albedoGeom;
-		this.rotationPeriod = builder.rotationPeriod;
 	}
 
 	public static Builder builder() {
@@ -39,7 +35,6 @@ public final class PhysicalProperties {
 		private double radius;
 		private double albedoBond;
 		private double albedoGeom;
-		private double rotationPeriod;
 
 		public Builder mass(double m) {
 			this.mass = m;
@@ -58,11 +53,6 @@ public final class PhysicalProperties {
 
 		public Builder albedoGeom(double ag) {
 			this.albedoGeom = ag;
-			return this;
-		}
-
-		public Builder rotationPeriod(double rp) {
-			this.rotationPeriod = rp;
 			return this;
 		}
 
@@ -86,9 +76,5 @@ public final class PhysicalProperties {
 
 	public double albedoGeom() {
 		return albedoGeom;
-	}
-
-	public double rotationPeriod() {
-		return rotationPeriod;
 	}
 }

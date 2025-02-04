@@ -51,10 +51,11 @@ public final class ScriptFormatter {
 	public static String format(CelestialObject co, 
 			String distanceUnit, 
 			String referencePlane) {
+		var objectType = co.getType();
 		var sb = new StringBuilder();
 
 		// Label based on object type
-		var objectLabel = (Objects.nonNull(co.getType())) ? co.getType().getFormattedName() : "Object";
+		var objectLabel = (Objects.nonNull(objectType)) ? objectType.getFormattedName() : "Object";
 		sb.append(String.format("%s \"%s\"\n{\n", objectLabel, co.getName()));
 		sb.append(String.format("    ParentBody\t\t\"%s\"\n", co.getParentBody()));
 
@@ -73,35 +74,47 @@ public final class ScriptFormatter {
 
 	private static void appendPhysicalBlock(StringBuilder sb, CelestialObject co) {
 		var props = co.getPhysicalProperties();
-		if (Objects.isNull(props)) {
+		if (props == null) {
 			return;
 		}
 
-		var objClass = (Objects.isNull(co.getClassification()) || co.getClassification().isBlank()) ? "Asteroid"
-				: co.getClassification();
-		sb.append(String.format("    Class\t\t\"%s\"\n", objClass));
+		// Cache the classification and type
+		var classification = co.getClassification();
+		var objectType = co.getType();
+
+		// Determine the object classification: if it is null or blank, use "Asteroid".
+		var objectClass = (Objects.isNull(classification) || classification.isBlank()) ? "Asteroid" : classification;
+		sb.append(String.format("    Class\t\t\"%s\"\n", objectClass));
 
 		// For barycenters, do not print any physical properties.
-		if (co.getType() == ObjectType.BARYCENTER) {
+		if (objectType == ObjectType.BARYCENTER) {
 			return;
 		}
 
-		// For comets, only output the radius. The rest is automatically calculated by
-		// SpaceEngine.
-		if (co.getType() == ObjectType.COMET) {
-			if (props.radius() > 0) {
-				sb.append(String.format("    Radius\t\t%.8f\n\n", props.radius()));
+		// Handle comets: only output the radius.
+		if (objectType == ObjectType.COMET) {
+			double radius = props.radius();
+			if (radius > 0) {
+				sb.append(String.format("    Radius\t\t%.8f\n\n", radius));
 			}
 		} else {
-			// (For other types, print all properties.)
-			if (props.mass() > 0) {
-				sb.append(String.format("    Mass\t\t%e\n", props.mass()));
+			// For other object types, print all physical properties.
+			double mass = props.mass();
+			double radius = props.radius();
+			double albedoBond = props.albedoBond();
+			double albedoGeom = props.albedoGeom();
+
+			if (mass > 0) {
+				sb.append(String.format("    Mass\t\t%e\n", mass));
 			}
-			if (props.radius() > 0) {
-				sb.append(String.format("    Radius\t\t%.8f\n\n", props.radius()));
+			if (radius > 0) {
+				sb.append(String.format("    Radius\t\t%.8f\n\n", radius));
 			}
-			if (props.rotationPeriod() > 0) {
-				sb.append(String.format("    RotationPeriod\t%.8f\n", props.rotationPeriod()));
+			if (albedoBond > 0) {
+				sb.append(String.format("    AlbedoBond\t%.8f\n", albedoBond));
+			}
+			if (albedoGeom > 0) {
+				sb.append(String.format("    AlbedoGeom\t%.8f\n", albedoGeom));
 			}
 			sb.append("\n");
 		}

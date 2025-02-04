@@ -40,7 +40,7 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code RegularMoonParams} instance containing all necessary
 	 *               parameters for creating regular moons
-	 * @throws NullPointerException if {@code params} is {@code null}
+	 * @throws NullPointerException if <b>params</b> is {@code null}
 	 */
 	public static void writeRegularMoons(RegularMoonParams params) {
 		var moons = generateRegularMoons(Objects.requireNonNull(params));
@@ -59,7 +59,7 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code GenericObjectParams} instance controlling the object
 	 *               count, orbital ranges, and the output file
-	 * @throws NullPointerException if {@code params} is {@code null}
+	 * @throws NullPointerException if <b>params</b> is {@code null}
 	 */
 	public static void writeGenericObjects(GenericObjectParams params) {
 		var objects = generateGenericObjects(Objects.requireNonNull(params));
@@ -92,7 +92,7 @@ public final class ScriptGenerator {
 	 *
 	 * @param params a {@code CometParams} object containing the necessary
 	 *               parameters for generating the comet script
-	 * @throws NullPointerException if {@code params} is {@code null}
+	 * @throws NullPointerException if <b>params</b> is {@code null}
 	 */
 	public static void writeComets(CometParams params) {
 		var commonParams = Objects.requireNonNull(params).commonParams();
