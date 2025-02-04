@@ -20,7 +20,7 @@ public final class ScriptFileWriter {
 	}
 
 	/**
-	 * Writes the supplied list of {@code CelestialObject} objects to a file in
+	 * Writes the specified list of {@code CelestialObject} objects to a file in
 	 * SpaceEngine’s canonical {@code .sc} script format.
 	 * <p>
 	 * The output file is determined by the {@link CommonParams#outputFile()} value
