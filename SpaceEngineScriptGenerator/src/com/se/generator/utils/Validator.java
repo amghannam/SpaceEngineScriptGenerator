@@ -44,7 +44,7 @@ public final class Validator {
 	 * 
 	 * <p>
 	 * Note that the specified value is permitted to be {@code null}; it is left up
-	 * to the caller to decide if this is acceptable via an appropriate
+	 * to the caller to decide if this is acceptable by specifying an appropriate
 	 * <b>condition</b>.
 	 * 
 	 * @param <T>       the type of the value to validate
@@ -67,7 +67,7 @@ public final class Validator {
 	 *
 	 * <p>
 	 * Note that the specified value is permitted to be {@code null}; it is left up
-	 * to the caller to decide if this is acceptable via an appropriate
+	 * to the caller to decide if this is acceptable by specifying an appropriate
 	 * <b>condition</b>.
 	 *
 	 * @param <T>          the type of the value to validate

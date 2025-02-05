@@ -107,15 +107,19 @@ public final class ScriptFormatter {
 			if (mass > 0) {
 				sb.append(String.format("    Mass\t\t%e\n", mass));
 			}
+			
 			if (radius > 0) {
 				sb.append(String.format("    Radius\t\t%.8f\n\n", radius));
 			}
+			
 			if (albedoBond > 0) {
 				sb.append(String.format("    AlbedoBond\t%.8f\n", albedoBond));
 			}
+			
 			if (albedoGeom > 0) {
 				sb.append(String.format("    AlbedoGeom\t%.8f\n", albedoGeom));
 			}
+			
 			sb.append("\n");
 		}
 	}
