@@ -43,8 +43,8 @@ public final class Validator {
 	 * includes the invalid value.
 	 * 
 	 * <p>
-	 * Note that the specified value is permitted to be {@code null}; it is left up
-	 * to the caller to decide if this is acceptable by specifying an appropriate
+	 * Note that the value given is permitted to be {@code null}; it is left up to
+	 * the caller to decide if this is acceptable by defining an appropriate
 	 * <b>condition</b>.
 	 * 
 	 * @param <T>       the type of the value to validate
@@ -66,8 +66,8 @@ public final class Validator {
 	 * {@code IllegalArgumentException} is thrown with the specified error message.
 	 *
 	 * <p>
-	 * Note that the specified value is permitted to be {@code null}; it is left up
-	 * to the caller to decide if this is acceptable by specifying an appropriate
+	 * Note that the value given is permitted to be {@code null}; it is left up to
+	 * the caller to decide if this is acceptable by defining an appropriate
 	 * <b>condition</b>.
 	 *
 	 * @param <T>          the type of the value to validate
