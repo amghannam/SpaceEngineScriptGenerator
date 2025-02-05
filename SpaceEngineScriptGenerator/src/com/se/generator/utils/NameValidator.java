@@ -32,8 +32,8 @@ public final class NameValidator {
 	}
 
 	/**
-	 * Validates a generic name (which is assumed to be used as a moon or a parent
-	 * body name) according to the following rules:
+	 * Validates a generic name (which is assumed to be a moon or a parent body
+	 * name) according to the following rules:
 	 * <ul>
 	 * <li>The name must not be {@code null}.</li>
 	 * <li>Length must be at least 1 and at most 20 characters.</li>
