@@ -17,9 +17,8 @@ import com.se.generator.utils.NameValidator;
 import com.se.generator.utils.Validator;
 
 /**
- * The {@code ScriptGeneratorService} class is the primary engine that
- * orchestrates the workflow for generating various SpaceEngine script files
- * based on user input.
+ * The {@code ScriptGeneratorService} is the class that orchestrates the
+ * workflow for generating various SpaceEngine script files based on user input.
  *
  * <p>
  * To start the workflow, invoke the {@link #run()} method. The application will
