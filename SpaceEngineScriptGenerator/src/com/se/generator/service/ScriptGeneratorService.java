@@ -246,7 +246,7 @@ public class ScriptGeneratorService {
 	}
 
 	private double[] promptValidatedRange(String fieldName, String promptMin, String promptMax) {
-		if ("inclination".equalsIgnoreCase(fieldName)) {
+		if (fieldName.equalsIgnoreCase("inclination")) {
 			return promptAndValidateRange(fieldName, 
 					promptMin, 
 					promptMax, 

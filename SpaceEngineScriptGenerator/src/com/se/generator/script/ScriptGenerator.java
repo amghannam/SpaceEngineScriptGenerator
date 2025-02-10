@@ -279,7 +279,7 @@ public final class ScriptGenerator {
 				.type(ObjectType.COMET)
 				.name(groupName + suffix)
 				.parentBody(groupName)
-				.classification("Asteroid")
+				.classification(ObjectType.ASTEROID.getFormattedName()) // By SE convention
 				.physicalProperties(pProps)
 				.orbitalElements(oElems)
 				.satellite(true)
@@ -299,7 +299,7 @@ public final class ScriptGenerator {
 				.type(ObjectType.COMET)
 				.name(name)
 				.parentBody(common.parentBody())
-				.classification("Asteroid")
+				.classification(ObjectType.ASTEROID.getFormattedName()) // By SE convention
 				.physicalProperties(pProps)
 				.orbitalElements(oElems)
 				.satellite(false)

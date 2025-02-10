@@ -8,14 +8,12 @@ import java.util.Objects;
  * object's label, physical properties, and orbital elements according to the
  * .sc file specification used by SpaceEngine.
  * <p>
- * For example, if the object type is COMET, only the radius will be printed in
- * the physical block; if the object is a BARYCENTER, no physical properties are
- * printed.
- * </p>
+ * For example, if the object type is {@code COMET}, only the radius will be
+ * printed in the physical block; if the object is a {@code BARYCENTER}, no
+ * physical properties are printed.
  * <p>
  * This class is a final utility class with only static methods and cannot be
  * instantiated.
- * </p>
  * 
  * @see CelestialObject
  * @see PhysicalProperties
@@ -55,7 +53,7 @@ public final class ScriptFormatter {
 		var sb = new StringBuilder();
 
 		// Label based on object type
-		var objectLabel = (Objects.nonNull(objectType)) ? objectType.getFormattedName() : "Object";
+		var objectLabel = (Objects.nonNull(objectType)) ? objectType.getFormattedName() : Constants.PLACEHOLDER_NAME;
 		sb.append(String.format("%s \"%s\"\n{\n", objectLabel, co.getName()));
 		sb.append(String.format("    ParentBody\t\t\"%s\"\n", co.getParentBody()));
 
@@ -83,7 +81,9 @@ public final class ScriptFormatter {
 		var objectType = co.getType();
 
 		// Determine the object classification: if it is null or blank, use "Asteroid".
-		var objectClass = (Objects.isNull(classification) || classification.isBlank()) ? "Asteroid" : classification;
+		var objectClass = (Objects.isNull(classification) || classification.isBlank())
+				? ObjectType.ASTEROID.getFormattedName()
+				: classification;
 		sb.append(String.format("    Class\t\t\"%s\"\n", objectClass));
 
 		// For barycenters, do not print any physical properties.
@@ -107,19 +107,14 @@ public final class ScriptFormatter {
 			if (mass > 0) {
 				sb.append(String.format("    Mass\t\t%e\n", mass));
 			}
-			
+
 			if (radius > 0) {
 				sb.append(String.format("    Radius\t\t%.8f\n\n", radius));
 			}
-			
-			if (albedoBond > 0) {
-				sb.append(String.format("    AlbedoBond\t%.8f\n", albedoBond));
-			}
-			
-			if (albedoGeom > 0) {
-				sb.append(String.format("    AlbedoGeom\t%.8f\n", albedoGeom));
-			}
-			
+
+			// Note: Albedo can be zero
+			sb.append(String.format("    AlbedoBond\t%.8f\n", albedoBond));
+			sb.append(String.format("    AlbedoGeom\t%.8f\n", albedoGeom));
 			sb.append("\n");
 		}
 	}
@@ -137,7 +132,7 @@ public final class ScriptFormatter {
 		sb.append("    {\n");
 		sb.append(String.format("        Epoch\t\t%.8f\n", oe.epoch()));
 
-		if ("km".equalsIgnoreCase(distanceUnit)) {
+		if (distanceUnit.equalsIgnoreCase("km")) {
 			sb.append(String.format("        SemiMajorAxisKm\t%.8f\n", oe.semiMajorAxis()));
 		} else {
 			sb.append(String.format("        SemiMajorAxis\t%.8f\n", oe.semiMajorAxis()));
