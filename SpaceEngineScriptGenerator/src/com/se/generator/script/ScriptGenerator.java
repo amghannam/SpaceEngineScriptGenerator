@@ -130,7 +130,7 @@ public final class ScriptGenerator {
 			// Orbital angles
 			double ecc = randomInRange(params.minEccentricity(), params.maxEccentricity());
 			double inc = randomInRange(params.minInclination(), params.maxInclination());
-			double asc = randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE);
+			double asc = estimateAscendingNode(inc);
 			double arg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
 			double ma = randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY);
 
@@ -176,7 +176,7 @@ public final class ScriptGenerator {
 			double axis = randomInRange(params.minAxis(), params.maxAxis());
 			double ecc = randomInRange(params.minEccentricity(), params.maxEccentricity());
 			double inc = randomInRange(params.minInclination(), params.maxInclination());
-			double asc = randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE);
+			double asc = estimateAscendingNode(inc);
 			double arg = randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN);
 			double ma = randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY);
 
@@ -307,12 +307,16 @@ public final class ScriptGenerator {
 	}
 
 	private static OrbitalElements generateOrbit(double minAxis, double maxAxis) {
+		// Ensure the ascending node is set properly
+		double inc = randomInRange(Constants.MIN_COMET_INCL, Constants.MAX_COMET_INCL);
+		double asc = estimateAscendingNode(inc);
+		
 		return OrbitalElements.builder()
 				.epoch(Constants.DEFAULT_EPOCH)
 				.semiMajorAxis(randomInRange(minAxis, maxAxis))
 				.eccentricity(randomInRange(Constants.MIN_COMET_ECC, Constants.MAX_COMET_ECC))
-				.inclination(randomInRange(Constants.MIN_COMET_INCL, Constants.MAX_COMET_INCL))
-				.ascendingNode(randomInRange(Constants.MIN_ASCENDING_NODE, Constants.MAX_ASCENDING_NODE))
+				.inclination(inc)
+				.ascendingNode(asc) // Zero if inc is zero
 				.argOfPericenter(randomInRange(Constants.MIN_ARG_OF_PERICEN, Constants.MAX_ARG_OF_PERICEN))
 				.meanAnomaly(randomInRange(Constants.MIN_MEAN_ANOMALY, Constants.MAX_MEAN_ANOMALY))
 				.build();
@@ -342,6 +346,19 @@ public final class ScriptGenerator {
 	 */
 	private static <T> void sortBySemiMajorAxis(List<T> list, Function<T, OrbitalElements> orbExtractor) {
 		list.sort(Comparator.comparingDouble(t -> orbExtractor.apply(t).semiMajorAxis()));
+	}
+
+	/**
+	 * Ensures that the ascending node is zero if the inclination is zero.
+	 * 
+	 * @param inc the inclination
+	 * @return the value of the ascending node, which is random if and only if the
+	 *         inclination is greater than zero
+	 */
+	private static double estimateAscendingNode(double inc) {
+		double minAsc = Constants.MIN_ASCENDING_NODE; // Zero
+		double maxAsc = Constants.MAX_ASCENDING_NODE;
+		return inc > minAsc ? randomInRange(minAsc, maxAsc) : minAsc;
 	}
 
 	/**
