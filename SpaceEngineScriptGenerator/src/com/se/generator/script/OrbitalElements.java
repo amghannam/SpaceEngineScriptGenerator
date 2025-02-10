@@ -22,8 +22,6 @@ package com.se.generator.script;
  * <li>{@code meanAnomaly} - The mean anomaly (in degrees) at the epoch,
  * representing the fraction of the orbital period that has elapsed since
  * pericenter passage.</li>
- * <li>{@code period} - The orbital period, the time required to complete one
- * full orbit.</li>
  * </ul>
  */
 public final class OrbitalElements {
@@ -34,7 +32,6 @@ public final class OrbitalElements {
 	private final double ascendingNode;
 	private final double argOfPericenter;
 	private final double meanAnomaly;
-	private final double period;
 
 	private OrbitalElements(Builder builder) {
 		this.epoch = builder.epoch;
@@ -44,7 +41,6 @@ public final class OrbitalElements {
 		this.ascendingNode = builder.ascendingNode;
 		this.argOfPericenter = builder.argOfPericenter;
 		this.meanAnomaly = builder.meanAnomaly;
-		this.period = builder.period;
 	}
 
 	public static Builder builder() {
@@ -59,7 +55,6 @@ public final class OrbitalElements {
 		private double ascendingNode;
 		private double argOfPericenter;
 		private double meanAnomaly;
-		private double period;
 
 		public Builder epoch(double e) {
 			this.epoch = e;
@@ -96,11 +91,6 @@ public final class OrbitalElements {
 			return this;
 		}
 
-		public Builder period(double p) {
-			this.period = p;
-			return this;
-		}
-
 		public OrbitalElements build() {
 			return new OrbitalElements(this);
 		}
@@ -133,9 +123,5 @@ public final class OrbitalElements {
 
 	public double meanAnomaly() {
 		return meanAnomaly;
-	}
-
-	public double period() {
-		return period;
 	}
 }

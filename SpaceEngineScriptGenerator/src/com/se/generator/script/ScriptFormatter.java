@@ -35,7 +35,6 @@ public final class ScriptFormatter {
 	 * by object type (for example, comets only display the radius, while
 	 * barycenters do not display any physical properties). The orbit block is
 	 * formatted using the provided distance unit and reference plane.
-	 * </p>
 	 *
 	 * @param co             the {@code CelestialObject} to be formatted into script
 	 *                       form
@@ -133,6 +132,7 @@ public final class ScriptFormatter {
 		sb.append(String.format("        Epoch\t\t%.8f\n", oe.epoch()));
 		sb.append(String.format("        RefPlane\t\"%s\"\n", referencePlane));
 
+		// Semi-major axis label depends on the selected distance unit (km or au)
 		if (distanceUnit.equalsIgnoreCase("km")) {
 			sb.append(String.format("        SemiMajorAxisKm\t%.8f\n", oe.semiMajorAxis()));
 		} else {
