@@ -131,6 +131,7 @@ public final class ScriptFormatter {
 		sb.append("    Orbit\n");
 		sb.append("    {\n");
 		sb.append(String.format("        Epoch\t\t%.8f\n", oe.epoch()));
+		sb.append(String.format("        RefPlane\t\"%s\"\n", referencePlane));
 
 		if (distanceUnit.equalsIgnoreCase("km")) {
 			sb.append(String.format("        SemiMajorAxisKm\t%.8f\n", oe.semiMajorAxis()));
@@ -142,7 +143,6 @@ public final class ScriptFormatter {
 		sb.append(String.format("        Inclination\t%.8f\n", oe.inclination()));
 		sb.append(String.format("        AscendingNode\t%.8f\n", oe.ascendingNode()));
 		sb.append(String.format("        ArgOfPericen\t%.8f\n", oe.argOfPericenter()));
-		sb.append(String.format("        RefPlane\t\"%s\"\n", referencePlane));
 		sb.append(String.format("        MeanAnomaly\t%.8f\n", oe.meanAnomaly()));
 		sb.append("    }\n");
 	}
