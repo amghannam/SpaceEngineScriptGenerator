@@ -120,7 +120,6 @@ public final class ScriptGenerator {
 	private static List<CelestialObject> generateRegularMoons(RegularMoonParams params) {
 		int count = params.names().size();
 		var objects = new ArrayList<CelestialObject>(count);
-
 		for (int i = 0; i < count; i++) {
 			var moonName = params.names().get(i);
 			double radius = params.radii().get(i);
@@ -171,7 +170,7 @@ public final class ScriptGenerator {
 	
 	private static List<CelestialObject> generateGenericObjects(GenericObjectParams params) {
 		int count = params.count();
-		var result = new ArrayList<CelestialObject>(count);
+		var objects = new ArrayList<CelestialObject>(count);
 		for (int i = 0; i < count; i++) {
 			double axis = randomInRange(params.minAxis(), params.maxAxis());
 			double ecc = randomInRange(params.minEccentricity(), params.maxEccentricity());
@@ -208,10 +207,10 @@ public final class ScriptGenerator {
 					.orbitalElements(oElems)
 					.build();
 
-			result.add(obj);
+			objects.add(obj);
 		}
 		
-		return result;
+		return objects;
 	}
 	
 	// Comet generation logic methods
@@ -367,7 +366,7 @@ public final class ScriptGenerator {
 	 * @return the generated double value
 	 */
 	private static double randomInRange(double min, double max) {
-		return min + (max - min) * RNG.nextDouble();
+		return RNG.nextDouble(min, max + 1); // Make max inclusive
 	}
 
 	/**
