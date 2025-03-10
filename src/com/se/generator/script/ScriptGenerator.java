@@ -366,7 +366,7 @@ public final class ScriptGenerator {
 	 * @return the generated double value
 	 */
 	private static double randomInRange(double min, double max) {
-		return RNG.nextDouble(min, max + 1); // Make max inclusive
+		return RNG.nextDouble(min, max); // Max is exclusive
 	}
 
 	/**

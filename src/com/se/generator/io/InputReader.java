@@ -20,7 +20,7 @@ public class InputReader {
 			System.out.println("1. au");
 			System.out.println("2. km");
 
-			int choice = (int) promptDouble("- Enter your choice (1-2): ");
+			int choice = promptInt("- Enter your choice (1-2): ");
 			switch (choice) {
 			case 1 -> {
 				return "AU";
@@ -46,7 +46,7 @@ public class InputReader {
 			System.out.println("3. Terra");
 			System.out.println("4. Aquaria");
 
-			int choice = (int) promptDouble("- Enter your choice (1-4): ");
+			int choice = promptInt("- Enter your choice (1-4): ");
 			switch (choice) {
 			case 1 -> {
 				return "Ferria";
@@ -80,7 +80,7 @@ public class InputReader {
 			System.out.println("5. Laplace");
 			System.out.println("6. Extrasolar");
 
-			int choice = (int) promptDouble("- Enter your choice (1-6): ");
+			int choice = promptInt("- Enter your choice (1-6): ");
 			switch (choice) {
 			case 1 -> {
 				return "Static";

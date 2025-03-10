@@ -51,7 +51,7 @@ public class ScriptGeneratorService {
 	public void run() {
 		while (true) {
 			displayMenu();
-			double choice = inputReader.promptDouble("- Enter your choice: ");
+			int choice = inputReader.promptInt("- Enter your choice: ");
 			if (choice == 0) {
 				System.out.println("Exiting...");
 				return;
