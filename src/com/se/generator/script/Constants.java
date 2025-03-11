@@ -44,6 +44,6 @@ public final class Constants {
 	public static final double MIN_COMET_INCL = 0.0; // Minimum inclination (in degrees)
 	public static final double MAX_COMET_INCL = 180.0; // Maximum inclination (in degrees)
 
-	public static final double MIN_COMET_RADIUS = 5.0; // Minimum radius for a comet
-	public static final double MAX_COMET_RADIUS = 10.0; // Maximum radius for a comet
+	public static final double MIN_COMET_RADIUS = 0.1; // Minimum radius for a comet
+	public static final double MAX_COMET_RADIUS = 7.0; // Maximum radius for a comet
 }
