@@ -38,17 +38,17 @@ public final class Validator {
 
 	/**
 	 * Validates the specified value against the specified condition. If the
-	 * condition evaluates to {@code false} for the value, an
+	 * condition evaluates to {@code false} for the value given, an
 	 * {@code IllegalArgumentException} is thrown with a default error message that
 	 * includes the invalid value.
 	 * 
 	 * <p>
-	 * Note that the value given is permitted to be {@code null}; it is left up to
-	 * the caller to decide if this is acceptable by defining an appropriate
-	 * <b>condition</b>.
+	 * Note that the value to check is permitted to be {@code null}; it is left up
+	 * to the caller to decide if this is acceptable by defining an appropriate
+	 * condition.
 	 * 
 	 * @param <T>       the type of the value to validate
-	 * @param value     the value to validate; may be {@code null}
+	 * @param value     the value to validate or test; may be {@code null}
 	 * @param condition the validation rule, which is a {@code Predicate} that
 	 *                  returns {@code true} if the value is valid; must not be
 	 *                  {@code null}
@@ -62,16 +62,16 @@ public final class Validator {
 
 	/**
 	 * Validates the specified value against the specified condition. If the
-	 * condition evaluates to {@code false} for the value, an
+	 * condition evaluates to {@code false} for the value given, an
 	 * {@code IllegalArgumentException} is thrown with the specified error message.
 	 *
 	 * <p>
-	 * Note that the value given is permitted to be {@code null}; it is left up to
-	 * the caller to decide if this is acceptable by defining an appropriate
-	 * <b>condition</b>.
+	 * Note that the value to check is permitted to be {@code null}; it is left up
+	 * to the caller to decide if this is acceptable by defining an appropriate
+	 * condition.
 	 *
 	 * @param <T>          the type of the value to validate
-	 * @param value        the value to validate; may be {@code null}
+	 * @param value        the value to validate or test; may be {@code null}
 	 * @param condition    the validation rule, which is a {@code Predicate} that
 	 *                     returns {@code true} if the value is valid; must not be
 	 *                     {@code null}

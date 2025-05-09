@@ -57,13 +57,13 @@ public class ScriptGeneratorService {
 				return;
 			}
 
-			var common = gatherCommonParams();
+			var commonParams = gatherCommonParams();
 
 			switch ((int) choice) {
-			case 1 -> handleGenericObjectGeneration(common, ObjectType.DWARF_MOON);
-			case 2 -> handleGenericObjectGeneration(common, ObjectType.ASTEROID);
-			case 3 -> handleRegularMoonGeneration(common);
-			case 4 -> handleCometCloudGeneration(common);
+			case 1 -> handleGenericObjectGeneration(commonParams, ObjectType.DWARF_MOON);
+			case 2 -> handleGenericObjectGeneration(commonParams, ObjectType.ASTEROID);
+			case 3 -> handleRegularMoonGeneration(commonParams);
+			case 4 -> handleCometCloudGeneration(commonParams);
 			default -> System.out.println("Invalid choice. Please try again.");
 			}
 		}
