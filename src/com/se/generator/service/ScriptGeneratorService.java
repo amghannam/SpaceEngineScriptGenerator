@@ -194,10 +194,10 @@ public class ScriptGeneratorService {
 				.parentBody(common.parentBody())
 				.distanceUnit(common.distanceUnit())
 				.referencePlane(common.referencePlane())
-				.outputFile(fileName)
 				.minAxis(minAxis)
 				.maxAxis(maxAxis)
 				.count(baseCount)
+				.outputFile(fileName)
 				.build();
 
 		ScriptGenerator.writeComets(cometParams);
